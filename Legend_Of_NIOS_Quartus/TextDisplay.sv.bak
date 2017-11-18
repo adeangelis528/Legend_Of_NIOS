@@ -1,0 +1,17 @@
+module TextDisplay(input logic[9:0] DrawX, DrawY,
+						 output logic is_drawn,
+						 output logic[10:0] addr,
+						 output logic[2:0] offset);
+
+	always_comb begin
+		if(DrawY >= 8 && DrawY < 24)begin
+			if(DrawX < 8) begin
+				addr = DrawY - 8 + 16*'h54;
+				offset = DrawX%8;
+				is_drawn = 1;
+			end
+		end
+
+	end
+
+endmodule
