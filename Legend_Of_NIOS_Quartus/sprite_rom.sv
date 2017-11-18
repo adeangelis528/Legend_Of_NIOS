@@ -2,7 +2,7 @@ module sprite_rom ( input [5:0]	addr,
 						output [31:0]	data
 					 );
 
-	parameter ADDR_WIDTH = 5;
+	parameter ADDR_WIDTH = 6;
    parameter DATA_WIDTH =  32;
 	logic [ADDR_WIDTH-1:0] addr_reg;
 				
