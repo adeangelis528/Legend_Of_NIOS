@@ -32,64 +32,75 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 	 
 	 logic[10:0] shape_x = 300;
 	 logic[10:0] shape_y = 300;
-	 logic[10:0] shape_size_x = 8;
-	 logic[10:0] shape_size_y = 16;
+	 logic[10:0] shape_size_x = 32;
+	 logic[10:0] shape_size_y = 132;
 	 
 	 logic[10:0] shape2_x = 100;
 	 logic[10:0] shape2_y = 300;
 	 logic[10:0] shape2_size_x = 8;
 	 logic[10:0] shape2_size_y = 100;
 	 
-	 logic [10:0] sprite_addr;
-	 logic [7:0] sprite_data;
-	 font_rom myROM(.addr(sprite_addr), .data(sprite_data));
+	 logic [5:0] sprite_addr;
+	 logic [32:0] sprite_data;
+	 sprite_rom myROM(.addr(sprite_addr), .data(sprite_data));
+	 
+	 
     
     // Assign color to sprites
     always_comb
     begin:Ball_on_proc
 			//Status bar
 			//if(DrawY < 32) begin
-					
-			//end
 			
-			if(DrawX >= shape_x && DrawX < shape_x + shape_size_x &&
-				DrawY >= shape_y && DrawY < shape_y + shape_size_y)
+			//end
+			if(DrawY < 32)
+			begin
+				shape_on = 1'b0;
+				shape2_on = 1'b0;
+				sprite_addr = 0;
+			end
+			else if((DrawX < 32 || DrawX > 607 || DrawY < 64 || DrawY > 447))
 			begin
 				shape_on = 1'b1;
 				shape2_on = 1'b0;
-				sprite_addr = (DrawY-shape_y + 16*'h48);
+				sprite_addr = (DrawY%32);
 			end
-			
-			
-			if(DrawX >= shape2_x && DrawX < shape2_x + shape2_size_x &&
-				DrawY >= shape2_y && DrawY < shape2_y + shape2_size_y)
-			begin
-				shape_on = 1'b0;
-				shape2_on = 1'b1;
-				sprite_addr = (DrawY-shape2_y + 16*'h01);
-			end
-			
 			else
 			begin
 				shape_on = 1'b0;
-				shape2_on = 1'b0;
-				sprite_addr = 10'b0;
+				shape2_on = 1'b1;
+				sprite_addr = (DrawY%32 + 32);
 			end
     end
 	 
 	 always_comb
 	 begin:RGB_Display
-		if ((shape_on == 1'b1) && sprite_data[DrawX-shape_x] == 1'b1)
+	   //Wall tile
+		if ((shape_on == 1'b1) && sprite_data[DrawX%32] == 1'b1)
+		begin
+			Red = 8'h00;
+			Green = 8'h00;
+			Blue = 8'hff;
+		end
+		else if ((shape_on == 1'b1) && sprite_data[DrawX%32] == 1'b0)
 		begin
 			Red = 8'h00;
 			Green = 8'hff;
 			Blue = 8'hff;
 		end
-		else if ((shape2_on == 1'b1) && sprite_data[DrawX-shape2_x] == 1'b1)
+		
+		//Floor tile
+		else if ((shape2_on == 1'b1) && sprite_data[DrawX%32] == 1'b1)
 		begin
-			Red = 8'hff;
+			Red = 8'h00;
 			Green = 8'hff;
-			Blue = 8'h00;
+			Blue = 8'hff;
+		end
+		else if ((shape2_on == 1'b1) && sprite_data[DrawX%32] == 1'b0)
+		begin
+			Red = 8'h00;
+			Green = 8'h00;
+			Blue = 8'hff;
 		end
 		
 		//Background color
@@ -97,7 +108,7 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 		begin
 			Red = 8'h00;
 			Green = 8'h00;
-			Blue = 8'h44;
+			Blue = 8'h00;
 		end
 	 end
     
