@@ -120,6 +120,12 @@ module lab8( input               CLOCK_50,
     
 	 //Extra logic for graphical interconnections
 	 logic[9:0] DrawX, DrawY;
+	 logic[9:0] Player_X, Player_Y;
+	 
+	 //Frame_Buffer curFrame();
+	 
+	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS),
+									.keycode(keycode[7:0]), .Player_X, .Player_Y);
 	 
     VGA_controller vga_controller_instance(.Clk, 
 														.Reset(Reset_h), 
@@ -134,6 +140,8 @@ module lab8( input               CLOCK_50,
     
     color_mapper color_instance(.DrawX,
 										  .DrawY,
+										  .Player_X,
+										  .Player_Y,
 										  .VGA_R,
 										  .VGA_G,
 										  .VGA_B);

@@ -3,7 +3,7 @@ module Background (input logic[9:0] DrawX, DrawY,
 
 	logic wall_on;
 	logic floor_on;
-	logic [5:0] sprite_addr;
+	logic [6:0] sprite_addr;
 	logic [32:0] sprite_data;
 	sprite_rom myROM(.addr(sprite_addr), .data(sprite_data));
 	

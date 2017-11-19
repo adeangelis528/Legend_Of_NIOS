@@ -1,0 +1,6 @@
+module Player(input logic reset,
+				  input logic [7:0] keycode,
+				  output logic[9:0] player_x, player_y);
+
+				  
+endmodule
