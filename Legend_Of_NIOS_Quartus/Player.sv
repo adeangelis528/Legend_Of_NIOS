@@ -1,5 +1,6 @@
 module Player(input logic Reset, frame_clk, Clk,
 				  input logic [7:0] keycode,
+				  input logic [2:0] room,
 				  output logic[9:0] Player_X, Player_Y);
 
 	
@@ -16,18 +17,22 @@ module Player(input logic Reset, frame_clk, Clk,
     logic [9:0] Player_X_Motion, Player_Y_Motion;
     logic [9:0] Player_X_Pos_in, Player_X_Motion_in, Player_Y_Pos_in, Player_Y_Motion_in;
     
+	 //level data is used for collision detection.
+	 logic [9:0] test_x, test_y;
+	 logic is_wall;
+	 level_rom leveldata(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall));
+	 
     /* Since the multiplicants are required to be signed, we have to first cast them
        from logic to int (signed by default) before they are multiplied. */
     
-    //////// Do not modify the always_ff blocks. ////////
     // Detect rising edge of frame_clk
     logic frame_clk_delayed;
     logic frame_clk_rising_edge;
 	 
 	 initial
 	 begin
-		Player_X = 320;
-		Player_Y = 240;
+		Player_X = 304;
+		Player_Y = 400;
 	 end
 	 
     always_ff @ (posedge Clk) begin
@@ -58,6 +63,10 @@ module Player(input logic Reset, frame_clk, Clk,
     // You need to modify always_comb block.
     always_comb
     begin
+		  //For collision detection
+		  test_x = Player_X_Pos_in;
+		  test_y = Player_Y_Pos_in;
+		  
         // Update the ball's position with its motion
         Player_X_Pos_in = Player_X + Player_X_Motion;
         Player_Y_Pos_in = Player_Y + Player_Y_Motion;
@@ -66,29 +75,57 @@ module Player(input logic Reset, frame_clk, Clk,
         Player_X_Motion_in = 0;
         Player_Y_Motion_in = 0;
 		  
+		  //Character controls and collision detection
 		  if(keycode == 4)
 		  begin
-				Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
-				Player_Y_Motion_in = 0;
+				//Test upper left corner
+				if(!is_wall) begin
+					//Test bottom left corner
+					test_y = test_y + 32;
+					if(!is_wall) begin
+						Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
+						Player_Y_Motion_in = 0;
+					end
+				end
 		  end
 		  else if(keycode == 7)
 		  begin
-				Player_X_Motion_in = Player_X_Step;
-				Player_Y_Motion_in = 0;
+				//Test upper right corner
+				test_x = test_x + 32;
+				if(!is_wall) begin
+					//Test lower right corner
+					test_y = test_y + 32;
+					if(!is_wall) begin
+						Player_X_Motion_in = Player_X_Step;
+						Player_Y_Motion_in = 0;
+					end
+				end
 		  end
 		  else if(keycode == 22)
 		  begin
-				Player_X_Motion_in = 0;
-				Player_Y_Motion_in = Player_Y_Step;
+				//Test lower left corner
+				test_y = test_y + 32;
+				if(!is_wall) begin
+					//Test lower right corner
+					test_x = test_x + 32;
+					if(!is_wall) begin
+						Player_X_Motion_in = 0;
+						Player_Y_Motion_in = Player_Y_Step;
+					end
+				end
 		  end
 		  else if(keycode == 26)
 		  begin
-				Player_X_Motion_in = 0;
-				Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
+				//Test upper left corner
+				if(!is_wall) begin
+					//Test upper right corner
+					test_x = test_x + 32;
+					if(!is_wall) begin
+						Player_X_Motion_in = 0;
+						Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
+					end
+				end
 		  end
-        
-		  //Collision Detection
-		  
 		  
 		  
 		  //Wraparound logic
@@ -102,14 +139,14 @@ module Player(input logic Reset, frame_clk, Clk,
 				Player_Y_Pos_in = 32;
 		  end
 		  
-		  else if(Player_X < 0)
+		  else if(Player_X <= 0)
 		  begin
-				Player_X_Pos_in = 607;
+				Player_X_Pos_in = 606;
 		  end
 		  
 		  else if(Player_X > 607)
 		  begin
-				Player_X_Pos_in = 0;
+				Player_X_Pos_in = 1;
 		  end
     end	
 	

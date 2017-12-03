@@ -142,7 +142,7 @@ module lab8( input               CLOCK_50,
 	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), 
 							.addr(font_addr), .offset(text_offset));
 							
-	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS),
+	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS), .room,
 									.keycode(keycode[7:0]), .Player_X, .Player_Y);
 	 
 	 

@@ -1,9 +1,9 @@
-11:25:25 **** Incremental Build of configuration Nios II for project usb_kb ****
+15:42:43 **** Incremental Build of configuration Nios II for project usb_kb ****
 make all 
 Info: Building ../usb_kb_bsp/
 C:/altera/15.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../usb_kb_bsp/
 [BSP build complete]
 [usb_kb build complete]
 
-11:25:26 Build Finished (took 1s.37ms)
+15:42:44 Build Finished (took 1s.42ms)
 

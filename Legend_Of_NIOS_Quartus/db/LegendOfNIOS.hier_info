@@ -64933,6 +64933,9 @@ keycode[7] => Equal0.IN25
 keycode[7] => Equal1.IN27
 keycode[7] => Equal2.IN27
 keycode[7] => Equal3.IN27
+room[0] => level_rom:leveldata.room[0]
+room[1] => level_rom:leveldata.room[1]
+room[2] => level_rom:leveldata.room[2]
 Player_X[0] <= Player_X[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_X[1] <= Player_X[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_X[2] <= Player_X[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -64953,6 +64956,36 @@ Player_Y[6] <= Player_Y[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_Y[7] <= Player_Y[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_Y[8] <= Player_Y[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_Y[9] <= Player_Y[9]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab8|Player:player_instance|level_rom:leveldata
+DrawX[0] => ~NO_FANOUT~
+DrawX[1] => ~NO_FANOUT~
+DrawX[2] => ~NO_FANOUT~
+DrawX[3] => ~NO_FANOUT~
+DrawX[4] => ~NO_FANOUT~
+DrawX[5] => Mux0.IN16
+DrawX[6] => Mux0.IN15
+DrawX[7] => Mux0.IN14
+DrawX[8] => Mux0.IN13
+DrawX[9] => Mux0.IN12
+DrawY[0] => ~NO_FANOUT~
+DrawY[1] => ~NO_FANOUT~
+DrawY[2] => ~NO_FANOUT~
+DrawY[3] => ~NO_FANOUT~
+DrawY[4] => ~NO_FANOUT~
+DrawY[5] => Add2.IN64
+DrawY[6] => Add2.IN63
+DrawY[7] => Add2.IN62
+DrawY[8] => Add2.IN61
+DrawY[9] => Add2.IN60
+room[0] => Add1.IN56
+room[0] => Add0.IN33
+room[1] => Add1.IN55
+room[1] => Add0.IN32
+room[2] => Add1.IN54
+room[2] => Add0.IN31
+bg_type <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |lab8|VGA_controller:vga_controller_instance
