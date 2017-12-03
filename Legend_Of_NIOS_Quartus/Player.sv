@@ -9,8 +9,8 @@ module Player(input logic Reset, frame_clk, Clk,
     parameter [9:0] Player_X_Max=639;     // Rightmost point on the X axis
     parameter [9:0] Player_Y_Min=0;       // Topmost point on the Y axis
     parameter [9:0] Player_Y_Max=479;     // Bottommost point on the Y axis
-    parameter [9:0] Player_X_Step=1;      // Step size on the X axis
-    parameter [9:0] Player_Y_Step=1;      // Step size on the Y axis
+    parameter [9:0] Player_X_Step=3;      // Step size on the X axis
+    parameter [9:0] Player_Y_Step=3;      // Step size on the Y axis
     parameter [9:0] Ball_Size=4;        // Ball size
     
     logic [9:0] Player_X_Motion, Player_Y_Motion;
@@ -87,6 +87,30 @@ module Player(input logic Reset, frame_clk, Clk,
 				Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
 		  end
         
+		  //Collision Detection
+		  
+		  
+		  
+		  //Wraparound logic
+		  if(Player_Y < 32)
+		  begin
+				Player_Y_Pos_in = 447;
+		  end
+		  
+		  else if(Player_Y > 447)
+		  begin
+				Player_Y_Pos_in = 32;
+		  end
+		  
+		  else if(Player_X < 0)
+		  begin
+				Player_X_Pos_in = 607;
+		  end
+		  
+		  else if(Player_X > 607)
+		  begin
+				Player_X_Pos_in = 0;
+		  end
     end	
 	
 	

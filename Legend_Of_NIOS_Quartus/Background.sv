@@ -1,4 +1,5 @@
 module Background (input logic[9:0] DrawX, DrawY,
+						 input logic bg_type,
 						 output logic[7:0] Red, Green, Blue);
 
 	logic wall_on;
@@ -19,17 +20,13 @@ module Background (input logic[9:0] DrawX, DrawY,
 				floor_on = 1'b0;
 				sprite_addr = 0;
 			end
-			else if((DrawX < 32 || DrawX > 607 || DrawY < 64 || DrawY > 447))
-			begin
-				wall_on = 1'b1;
-				floor_on = 1'b0;
-				sprite_addr = (DrawY%32);
-			end
 			else
 			begin
-				wall_on = 1'b0;
-				floor_on = 1'b1;
-				sprite_addr = (DrawY%32 + 32);
+				wall_on = bg_type;
+				floor_on = ~bg_type;
+				sprite_addr = (DrawY%32);
+				if(!bg_type)
+					sprite_addr = (DrawY%32 + 32);
 			end
     end
 	 

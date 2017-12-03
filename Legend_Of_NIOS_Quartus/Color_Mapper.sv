@@ -18,6 +18,10 @@ module  color_mapper ( //input              is_ball,            // Whether curre
                                                               //   or background (computed in ball.sv)
                        input        [9:0] DrawX, DrawY,       // Current pixel coordinates
 							  input			[9:0] Player_X, Player_Y,
+							  input logic	[7:0]	bg_r, bg_g, bg_b,
+							  input logic	[10:0] font_addr,
+							  input logic	[3:0] text_offset,
+							  input logic 	draw_text,
                        output logic [7:0] VGA_R, VGA_G, VGA_B // VGA RGB output
                      );
     
@@ -27,39 +31,27 @@ module  color_mapper ( //input              is_ball,            // Whether curre
     assign VGA_R = Red;
     assign VGA_G = Green;
     assign VGA_B = Blue;
+	
 	 
-	 logic[7:0] bg_r, bg_g, bg_b;
-	 logic[10:0] font_addr;
-	 logic[7:0] font_data;
-	 logic[3:0] text_offset;
-	 logic draw_text;
 	 
 	 //Player Character
 	 logic pc_on;
-	 logic[6:0] sprite_addr;
-	 logic[31:0] sprite_data;
+	 
 	 logic[10:0] pc_x;
 	 logic[10:0] pc_y;
 	 logic[10:0] pc_size_x = 32;
 	 logic[10:0] pc_size_y = 32;
 	 
-	 logic shape2_on;
-	 logic[10:0] shape2_x = 100;
-	 logic[10:0] shape2_y = 300;
-	 logic[10:0] shape2_size_x = 8;
-	 logic[10:0] shape2_size_y = 100;
-	 
 	 assign pc_x = Player_X;
 	 assign pc_y = Player_Y;
 	 
-	 //Display modules
 	 //Sprite tables
+	 logic[7:0] font_data;
 	 font_rom font(.addr(font_addr), .data(font_data));
-	 sprite_rom sprites(.addr(sprite_addr), .data(sprite_data));
 	 
-	 //Draw modules
-	 Background bg(.Red(bg_r), .Green(bg_g), .Blue(bg_b), .DrawX, .DrawY);
-	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), .addr(font_addr), .offset(text_offset));
+	 logic[6:0] sprite_addr;
+	 logic[31:0] sprite_data;
+	 sprite_rom sprites(.addr(sprite_addr), .data(sprite_data));
 	 
     always_comb
     begin:Ball_on_proc

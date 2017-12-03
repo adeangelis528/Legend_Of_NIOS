@@ -121,12 +121,32 @@ module lab8( input               CLOCK_50,
 	 //Extra logic for graphical interconnections
 	 logic[9:0] DrawX, DrawY;
 	 logic[9:0] Player_X, Player_Y;
+	 logic[7:0] bg_r, bg_g, bg_b;
+	 logic[10:0] font_addr;
+	 logic[3:0] text_offset;
+	 logic draw_text;
+	 logic[2:0] room;
+	 logic bg_type;
 	 
-	 //Frame_Buffer curFrame();
+	 //Temporary
+	 assign room = 1;
+	 //assign bg_type = 0;
 	 
+	 //Level Data
+	 level_rom level_instance(.DrawX, .DrawY, .room, .bg_type);
+	 
+	 //Draw modules
+	 Background bg(.Red(bg_r), .Green(bg_g), .Blue(bg_b), 
+						.bg_type, .DrawX, .DrawY);
+						
+	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), 
+							.addr(font_addr), .offset(text_offset));
+							
 	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS),
 									.keycode(keycode[7:0]), .Player_X, .Player_Y);
 	 
+	 
+	 //Interface modules
     VGA_controller vga_controller_instance(.Clk, 
 														.Reset(Reset_h), 
 														.VGA_HS, 
@@ -140,8 +160,9 @@ module lab8( input               CLOCK_50,
     
     color_mapper color_instance(.DrawX,
 										  .DrawY,
-										  .Player_X,
-										  .Player_Y,
+										  .Player_X, .Player_Y,
+										  .bg_r, .bg_g, .bg_b,
+										  .font_addr, .text_offset, .draw_text,
 										  .VGA_R,
 										  .VGA_G,
 										  .VGA_B);
