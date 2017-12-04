@@ -1,0 +1,13 @@
+module RoomState(		input logic[2:0] doorcode,
+							input logic vsync,
+							output logic[2:0] room);
+							
+					
+			logic[2:0] cur_room, next_room;
+			
+			always_ff @ (posedge vsync)
+			begin
+				cur_room <= next_room;
+			end
+							
+endmodule

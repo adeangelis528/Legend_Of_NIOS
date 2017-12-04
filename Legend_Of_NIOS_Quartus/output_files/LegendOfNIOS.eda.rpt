@@ -1,5 +1,5 @@
 EDA Netlist Writer report for LegendOfNIOS
-Sun Dec 03 15:41:42 2017
+Sun Dec 03 18:53:18 2017
 Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
 
 
@@ -37,7 +37,7 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Sun Dec 03 15:41:42 2017 ;
+; EDA Netlist Writer Status ; Successful - Sun Dec 03 18:53:18 2017 ;
 ; Revision Name             ; LegendOfNIOS                          ;
 ; Top-level Entity Name     ; lab8                                  ;
 ; Family                    ; Cyclone IV E                          ;
@@ -89,7 +89,7 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit EDA Netlist Writer
     Info: Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
-    Info: Processing started: Sun Dec 03 15:41:36 2017
+    Info: Processing started: Sun Dec 03 18:53:12 2017
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off LegendOfNIOS -c LegendOfNIOS
 Info (204019): Generated file LegendOfNIOS_7_1200mv_85c_slow.vho in folder "C:/Users/Andrew/Documents/ECE385/Legend_Of_NIOS/Legend_Of_NIOS_Quartus/simulation/modelsim/" for EDA simulation tool
 Info (204019): Generated file LegendOfNIOS_7_1200mv_0c_slow.vho in folder "C:/Users/Andrew/Documents/ECE385/Legend_Of_NIOS/Legend_Of_NIOS_Quartus/simulation/modelsim/" for EDA simulation tool
@@ -100,8 +100,8 @@ Info (204019): Generated file LegendOfNIOS_7_1200mv_0c_vhd_slow.sdo in folder "C
 Info (204019): Generated file LegendOfNIOS_min_1200mv_0c_vhd_fast.sdo in folder "C:/Users/Andrew/Documents/ECE385/Legend_Of_NIOS/Legend_Of_NIOS_Quartus/simulation/modelsim/" for EDA simulation tool
 Info (204019): Generated file LegendOfNIOS_vhd.sdo in folder "C:/Users/Andrew/Documents/ECE385/Legend_Of_NIOS/Legend_Of_NIOS_Quartus/simulation/modelsim/" for EDA simulation tool
 Info: Quartus II 64-Bit EDA Netlist Writer was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 717 megabytes
-    Info: Processing ended: Sun Dec 03 15:41:42 2017
+    Info: Peak virtual memory: 716 megabytes
+    Info: Processing ended: Sun Dec 03 18:53:18 2017
     Info: Elapsed time: 00:00:06
     Info: Total CPU time (on all processors): 00:00:06
 

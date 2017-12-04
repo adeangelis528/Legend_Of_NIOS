@@ -1,7 +1,8 @@
 module Player(input logic Reset, frame_clk, Clk,
 				  input logic [7:0] keycode,
 				  input logic [2:0] room,
-				  output logic[9:0] Player_X, Player_Y);
+				  output logic[9:0] Player_X, Player_Y,
+				  output logic[2:0] doorcode);
 
 	
     parameter [9:0] Player_X_Center=320;  // Center position on the X axis
@@ -22,6 +23,7 @@ module Player(input logic Reset, frame_clk, Clk,
 	 logic is_wall;
 	 level_rom leveldata(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall));
 	 
+	 logic[2:0] doorcode_in;
     /* Since the multiplicants are required to be signed, we have to first cast them
        from logic to int (signed by default) before they are multiplied. */
     
@@ -56,6 +58,8 @@ module Player(input logic Reset, frame_clk, Clk,
             Player_Y <= Player_Y_Pos_in;
             Player_X_Motion <= Player_X_Motion_in;
             Player_Y_Motion <= Player_Y_Motion_in;
+				
+				doorcode <= doorcode_in;
         end
         // By defualt, keep the register values.
     end
@@ -63,89 +67,66 @@ module Player(input logic Reset, frame_clk, Clk,
     // You need to modify always_comb block.
     always_comb
     begin
-		  //For collision detection
-		  test_x = Player_X_Pos_in;
-		  test_y = Player_Y_Pos_in;
+		  //Default: No door has been entered
+		  doorcode_in = 0;
 		  
         // Update the ball's position with its motion
         Player_X_Pos_in = Player_X + Player_X_Motion;
         Player_Y_Pos_in = Player_Y + Player_Y_Motion;
+		  
+		  //For collision detection
+		  test_x = Player_X_Pos_in;
+		  test_y = Player_Y_Pos_in;
     
         // By default, keep motion unchanged
         Player_X_Motion_in = 0;
         Player_Y_Motion_in = 0;
 		  
-		  //Character controls and collision detection
+		  //Character controls
 		  if(keycode == 4)
 		  begin
-				//Test upper left corner
-				if(!is_wall) begin
-					//Test bottom left corner
-					test_y = test_y + 32;
-					if(!is_wall) begin
-						Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
-						Player_Y_Motion_in = 0;
-					end
-				end
+				Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
+				Player_Y_Motion_in = 0;
 		  end
 		  else if(keycode == 7)
 		  begin
-				//Test upper right corner
-				test_x = test_x + 32;
-				if(!is_wall) begin
-					//Test lower right corner
-					test_y = test_y + 32;
-					if(!is_wall) begin
-						Player_X_Motion_in = Player_X_Step;
-						Player_Y_Motion_in = 0;
-					end
-				end
+				Player_X_Motion_in = Player_X_Step;
+				Player_Y_Motion_in = 0;
 		  end
 		  else if(keycode == 22)
 		  begin
-				//Test lower left corner
-				test_y = test_y + 32;
-				if(!is_wall) begin
-					//Test lower right corner
-					test_x = test_x + 32;
-					if(!is_wall) begin
-						Player_X_Motion_in = 0;
-						Player_Y_Motion_in = Player_Y_Step;
-					end
-				end
+				Player_X_Motion_in = 0;
+				Player_Y_Motion_in = Player_Y_Step;
 		  end
 		  else if(keycode == 26)
 		  begin
-				//Test upper left corner
-				if(!is_wall) begin
-					//Test upper right corner
-					test_x = test_x + 32;
-					if(!is_wall) begin
-						Player_X_Motion_in = 0;
-						Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
-					end
-				end
+				Player_X_Motion_in = 0;
+				Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
 		  end
-		  
+ 
 		  
 		  //Wraparound logic
 		  if(Player_Y < 32)
 		  begin
+				doorcode_in = 3;
 				Player_Y_Pos_in = 447;
 		  end
 		  
 		  else if(Player_Y > 447)
 		  begin
+				doorcode_in = 4;
 				Player_Y_Pos_in = 32;
 		  end
 		  
-		  else if(Player_X <= 0)
+		  else if(Player_X == 0 | Player_X >= 700)
 		  begin
-				Player_X_Pos_in = 606;
+				doorcode_in = 2;
+				Player_X_Pos_in = 607;
 		  end
 		  
-		  else if(Player_X > 607)
+		  else if(Player_X > 607 & Player_X < 700)
 		  begin
+				doorcode_in = 1;
 				Player_X_Pos_in = 1;
 		  end
     end	

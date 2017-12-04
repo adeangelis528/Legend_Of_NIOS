@@ -64547,6 +64547,21 @@ room[2] => Add0.IN31
 bg_type <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
 
 
+|lab8|RoomState:room_logic
+doorcode[0] => Equal0.IN31
+doorcode[0] => Equal1.IN0
+doorcode[1] => Equal0.IN0
+doorcode[1] => Equal1.IN31
+doorcode[2] => Equal0.IN30
+doorcode[2] => Equal1.IN30
+vsync => cur_room[0].CLK
+vsync => cur_room[1].CLK
+vsync => cur_room[2].CLK
+room[0] <= cur_room[0].DB_MAX_OUTPUT_PORT_TYPE
+room[1] <= cur_room[1].DB_MAX_OUTPUT_PORT_TYPE
+room[2] <= cur_room[2].DB_MAX_OUTPUT_PORT_TYPE
+
+
 |lab8|Background:bg
 DrawX[0] => Mux0.IN4
 DrawX[1] => Mux0.IN3
@@ -64858,8 +64873,14 @@ Reset => Player_Y_Motion.OUTPUTSELECT
 Reset => Player_Y_Motion.OUTPUTSELECT
 Reset => Player_Y_Motion.OUTPUTSELECT
 Reset => Player_Y_Motion.OUTPUTSELECT
+Reset => doorcode[2]~reg0.ENA
+Reset => doorcode[1]~reg0.ENA
+Reset => doorcode[0]~reg0.ENA
 frame_clk => frame_clk_rising_edge.IN1
 frame_clk => frame_clk_delayed.DATAIN
+Clk => doorcode[0]~reg0.CLK
+Clk => doorcode[1]~reg0.CLK
+Clk => doorcode[2]~reg0.CLK
 Clk => Player_Y_Motion[0].CLK
 Clk => Player_Y_Motion[1].CLK
 Clk => Player_Y_Motion[2].CLK
@@ -64956,6 +64977,9 @@ Player_Y[6] <= Player_Y[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_Y[7] <= Player_Y[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_Y[8] <= Player_Y[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 Player_Y[9] <= Player_Y[9]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+doorcode[0] <= doorcode[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+doorcode[1] <= doorcode[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+doorcode[2] <= doorcode[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |lab8|Player:player_instance|level_rom:leveldata

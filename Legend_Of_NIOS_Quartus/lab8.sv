@@ -124,16 +124,16 @@ module lab8( input               CLOCK_50,
 	 logic[7:0] bg_r, bg_g, bg_b;
 	 logic[10:0] font_addr;
 	 logic[3:0] text_offset;
-	 logic draw_text;
-	 logic[2:0] room;
-	 logic bg_type;
+	 logic draw_text, bg_type;
+	 logic[2:0] room, doorcode;
 	 
 	 //Temporary
-	 assign room = 1;
+	 //assign room = 0;
 	 //assign bg_type = 0;
 	 
 	 //Level Data
 	 level_rom level_instance(.DrawX, .DrawY, .room, .bg_type);
+	 RoomState room_logic(.doorcode, .vsync(VGA_VS), .room);
 	 
 	 //Draw modules
 	 Background bg(.Red(bg_r), .Green(bg_g), .Blue(bg_b), 
@@ -142,7 +142,7 @@ module lab8( input               CLOCK_50,
 	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), 
 							.addr(font_addr), .offset(text_offset));
 							
-	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS), .room,
+	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS), .room, .doorcode,
 									.keycode(keycode[7:0]), .Player_X, .Player_Y);
 	 
 	 
