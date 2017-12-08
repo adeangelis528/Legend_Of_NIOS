@@ -126,10 +126,16 @@ module lab8( input               CLOCK_50,
 	 logic[3:0] text_offset;
 	 logic draw_text, bg_type;
 	 logic[2:0] room, doorcode;
+	 logic[1:0] health;
+	 logic[3:0] score1, score2;
 	 
 	 //Temporary
 	 //assign room = 0;
 	 //assign bg_type = 0;
+	 
+	 //Game state
+	 GameState gamedata(.Clk, .Reset(Reset_h), .Frame_clk(VGA_VS), .Player_X, .Player_Y,
+								.health, .score1, .score2);
 	 
 	 //Level Data
 	 level_rom level_instance(.DrawX, .DrawY, .room, .bg_type);
@@ -139,7 +145,7 @@ module lab8( input               CLOCK_50,
 	 Background bg(.Red(bg_r), .Green(bg_g), .Blue(bg_b), 
 						.bg_type, .DrawX, .DrawY);
 						
-	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), 
+	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), .score1, .score2, .health,
 							.addr(font_addr), .offset(text_offset));
 							
 	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS), .room, .doorcode,

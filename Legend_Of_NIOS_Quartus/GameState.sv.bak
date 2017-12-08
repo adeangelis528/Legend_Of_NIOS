@@ -1,0 +1,16 @@
+module GameState (input logic Clk, Frame_Clk, Reset,
+						input logic [9:0] Player_X, Player_Y,
+						output logic [3:0] score1, score2,
+						output logic [1:0] health);
+						
+always_ff @ posedge (Clk) begin
+
+
+
+end
+
+always_comb begin
+
+end
+
+endmodule

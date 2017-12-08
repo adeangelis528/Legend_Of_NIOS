@@ -20,7 +20,7 @@ module Player(input logic Reset, frame_clk, Clk,
     
 	 //level data is used for collision detection.
 	 logic [9:0] test_x, test_y;
-	 logic is_wall;
+	 logic is_wall, wall_flag;
 	 level_rom leveldata(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall));
 	 
 	 logic[2:0] doorcode_in;
@@ -77,6 +77,8 @@ module Player(input logic Reset, frame_clk, Clk,
 		  //For collision detection
 		  test_x = Player_X_Pos_in;
 		  test_y = Player_Y_Pos_in;
+		  wall_flag = 0;
+		  
     
         // By default, keep motion unchanged
         Player_X_Motion_in = 0;
@@ -85,23 +87,96 @@ module Player(input logic Reset, frame_clk, Clk,
 		  //Character controls
 		  if(keycode == 4)
 		  begin
+				/*//Test upper left corner
+				if(!is_wall) begin
+					//Test lower left corner
+					test_y = test_y + 32;
+					if(!is_wall) begin
+						Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
+						Player_Y_Motion_in = 0;
+					end
+					else begin
+						Player_X_Motion_in = 1'b1;
+						Player_Y_Motion_in = 0;
+					end
+				end
+				else begin
+					Player_X_Motion_in = 1'b1;
+					Player_Y_Motion_in = 0;
+				end*/
 				Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
 				Player_Y_Motion_in = 0;
+				
+				if(is_wall)
+					wall_flag = 1;
+				test_y = test_y + 32;
+				if(is_wall)
+					wall_flag = 1;
+				if(wall_flag)
+					Player_X_Motion_in = 1'b1;
+				
 		  end
 		  else if(keycode == 7)
 		  begin
-				Player_X_Motion_in = Player_X_Step;
-				Player_Y_Motion_in = 0;
+				//Test upper right corner
+				test_x = test_x + 32;
+				if(!is_wall) begin
+					//Test lower right corner
+					test_y = test_y + 32;
+					if(!is_wall) begin
+						Player_X_Motion_in = Player_X_Step;
+						Player_Y_Motion_in = 0;
+					end
+					else begin
+						Player_X_Motion_in = ~(10'b1) + 1'b1;
+						Player_Y_Motion_in = 0;
+					end
+				end
+				else begin
+					Player_X_Motion_in = ~(10'b1) + 1'b1;
+					Player_Y_Motion_in = 0;
+				end
 		  end
 		  else if(keycode == 22)
 		  begin
-				Player_X_Motion_in = 0;
-				Player_Y_Motion_in = Player_Y_Step;
+				//Test bottom left corner
+				test_y = test_y + 32;
+				if(!is_wall) begin
+					//Test lower right corner
+					test_x = test_x + 32;
+					if(!is_wall) begin
+						Player_Y_Motion_in = Player_Y_Step;
+						Player_X_Motion_in = 0;
+					end
+					else begin
+						Player_Y_Motion_in = ~(10'b1) + 1'b1;
+						Player_X_Motion_in = 0;
+					end
+				end
+				else begin
+					Player_Y_Motion_in = ~(10'b1) + 1'b1;
+					Player_X_Motion_in = 0;
+				end
 		  end
 		  else if(keycode == 26)
 		  begin
-				Player_X_Motion_in = 0;
-				Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
+				//Test upper left corner
+				if(!is_wall) begin
+					//Test upper right corner
+					test_x = test_x + 32;
+					if(!is_wall) begin
+						Player_Y_Motion_in = ~(Player_X_Step) + 1'b1;
+						Player_X_Motion_in = 0;
+					end
+					else begin
+						Player_Y_Motion_in = 1'b1;
+						Player_X_Motion_in = 0;
+					end
+				end
+				else begin
+					Player_Y_Motion_in = 1'b1;
+					Player_X_Motion_in = 0;
+				end
 		  end
  
 		  

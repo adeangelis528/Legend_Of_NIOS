@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Dec 3, 2017 11:14:35 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1512321275637</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Dec 7, 2017 7:42:10 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1512697330701</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\Users\Andrew\Documents\ECE385\Legend_Of_NIOS\Legend_Of_NIOS_Quartus\software\usb_kb_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\nios_system.sopcinfo</SopcDesignFile>
