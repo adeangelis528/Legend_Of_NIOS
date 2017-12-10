@@ -19,6 +19,7 @@
 #include <unistd.h>  // usleep 
 #include "sys/alt_irq.h"
 #include "io_handler.h"
+#include "enemyController.h"
 
 #include "cy7c67200.h"
 #include "usb.h"
@@ -43,7 +44,7 @@ int main(void)
 		//UsbRead(0xc008);
 		usleep(10*10000);
 	}*/
-
+	srand(424242);
 	alt_u16 intStat;
 	alt_u16 usb_ctl_val;
 	static alt_u16 ctl_reg = 0;
@@ -525,6 +526,8 @@ int main(void)
 
 		usleep(200);//usleep(5000);
 		usb_ctl_val = UsbRead(ctl_reg);
+
+		updateEnemies();
 
 		if(!(usb_ctl_val & no_device))
 		{

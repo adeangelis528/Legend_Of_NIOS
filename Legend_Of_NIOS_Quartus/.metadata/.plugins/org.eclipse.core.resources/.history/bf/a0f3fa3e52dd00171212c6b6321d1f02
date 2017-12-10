@@ -1,0 +1,18 @@
+#include "system.h"
+#include "alt_types.h"
+
+#define select_addr	(volatile int*)  ENTITY_SELECT_BASE
+#define entity_active_addr (volatile int*) ENTITY_ACTIVE_BASE
+#define entity_x_addr (volatile int*) ENTITY_X_BASE
+#define entity_y_addr (volatile int*) ENTITY_Y_BASE
+#define entity_dir_addr (volatile int*) ENTITY_DIR_BASE
+#define entity_read_addr (volatile int*) ENTITY_READ_BASE
+#define entity_write_addr (volatile int*) ENTITY_WRITE_BASE
+
+
+void moveEnemy()
+{
+
+
+
+}
