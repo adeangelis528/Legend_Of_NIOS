@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys_0' in SOPC Builder design 'nios_system'
  * SOPC Builder design path: ../../nios_system.sopcinfo
  *
- * Generated: Sun Nov 12 18:41:20 CST 2017
+ * Generated: Sat Dec 09 18:04:36 CST 2017
  */
 
 /*
@@ -158,24 +158,213 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart_0"
-#define ALT_STDERR_BASE 0x98
+#define ALT_STDERR_BASE 0x110
 #define ALT_STDERR_DEV jtag_uart_0
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart_0"
-#define ALT_STDIN_BASE 0x98
+#define ALT_STDIN_BASE 0x110
 #define ALT_STDIN_DEV jtag_uart_0
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart_0"
-#define ALT_STDOUT_BASE 0x98
+#define ALT_STDOUT_BASE 0x110
 #define ALT_STDOUT_DEV jtag_uart_0
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
 #define ALT_STDOUT_TYPE "altera_avalon_jtag_uart"
 #define ALT_SYSTEM_NAME "nios_system"
+
+
+/*
+ * entity_active configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_active altera_avalon_pio
+#define ENTITY_ACTIVE_BASE 0x20
+#define ENTITY_ACTIVE_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_ACTIVE_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_ACTIVE_CAPTURE 0
+#define ENTITY_ACTIVE_DATA_WIDTH 1
+#define ENTITY_ACTIVE_DO_TEST_BENCH_WIRING 0
+#define ENTITY_ACTIVE_DRIVEN_SIM_VALUE 0
+#define ENTITY_ACTIVE_EDGE_TYPE "NONE"
+#define ENTITY_ACTIVE_FREQ 50000000
+#define ENTITY_ACTIVE_HAS_IN 1
+#define ENTITY_ACTIVE_HAS_OUT 0
+#define ENTITY_ACTIVE_HAS_TRI 0
+#define ENTITY_ACTIVE_IRQ -1
+#define ENTITY_ACTIVE_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_ACTIVE_IRQ_TYPE "NONE"
+#define ENTITY_ACTIVE_NAME "/dev/entity_active"
+#define ENTITY_ACTIVE_RESET_VALUE 0
+#define ENTITY_ACTIVE_SPAN 16
+#define ENTITY_ACTIVE_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_dir configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_dir altera_avalon_pio
+#define ENTITY_DIR_BASE 0x50
+#define ENTITY_DIR_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_DIR_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_DIR_CAPTURE 0
+#define ENTITY_DIR_DATA_WIDTH 2
+#define ENTITY_DIR_DO_TEST_BENCH_WIRING 0
+#define ENTITY_DIR_DRIVEN_SIM_VALUE 0
+#define ENTITY_DIR_EDGE_TYPE "NONE"
+#define ENTITY_DIR_FREQ 50000000
+#define ENTITY_DIR_HAS_IN 0
+#define ENTITY_DIR_HAS_OUT 1
+#define ENTITY_DIR_HAS_TRI 0
+#define ENTITY_DIR_IRQ -1
+#define ENTITY_DIR_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_DIR_IRQ_TYPE "NONE"
+#define ENTITY_DIR_NAME "/dev/entity_dir"
+#define ENTITY_DIR_RESET_VALUE 0
+#define ENTITY_DIR_SPAN 16
+#define ENTITY_DIR_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_read configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_read altera_avalon_pio
+#define ENTITY_READ_BASE 0x70
+#define ENTITY_READ_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_READ_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_READ_CAPTURE 0
+#define ENTITY_READ_DATA_WIDTH 1
+#define ENTITY_READ_DO_TEST_BENCH_WIRING 0
+#define ENTITY_READ_DRIVEN_SIM_VALUE 0
+#define ENTITY_READ_EDGE_TYPE "NONE"
+#define ENTITY_READ_FREQ 50000000
+#define ENTITY_READ_HAS_IN 0
+#define ENTITY_READ_HAS_OUT 1
+#define ENTITY_READ_HAS_TRI 0
+#define ENTITY_READ_IRQ -1
+#define ENTITY_READ_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_READ_IRQ_TYPE "NONE"
+#define ENTITY_READ_NAME "/dev/entity_read"
+#define ENTITY_READ_RESET_VALUE 0
+#define ENTITY_READ_SPAN 16
+#define ENTITY_READ_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_select configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_select altera_avalon_pio
+#define ENTITY_SELECT_BASE 0x80
+#define ENTITY_SELECT_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_SELECT_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_SELECT_CAPTURE 0
+#define ENTITY_SELECT_DATA_WIDTH 3
+#define ENTITY_SELECT_DO_TEST_BENCH_WIRING 0
+#define ENTITY_SELECT_DRIVEN_SIM_VALUE 0
+#define ENTITY_SELECT_EDGE_TYPE "NONE"
+#define ENTITY_SELECT_FREQ 50000000
+#define ENTITY_SELECT_HAS_IN 0
+#define ENTITY_SELECT_HAS_OUT 1
+#define ENTITY_SELECT_HAS_TRI 0
+#define ENTITY_SELECT_IRQ -1
+#define ENTITY_SELECT_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_SELECT_IRQ_TYPE "NONE"
+#define ENTITY_SELECT_NAME "/dev/entity_select"
+#define ENTITY_SELECT_RESET_VALUE 0
+#define ENTITY_SELECT_SPAN 16
+#define ENTITY_SELECT_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_write configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_write altera_avalon_pio
+#define ENTITY_WRITE_BASE 0x60
+#define ENTITY_WRITE_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_WRITE_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_WRITE_CAPTURE 0
+#define ENTITY_WRITE_DATA_WIDTH 1
+#define ENTITY_WRITE_DO_TEST_BENCH_WIRING 0
+#define ENTITY_WRITE_DRIVEN_SIM_VALUE 0
+#define ENTITY_WRITE_EDGE_TYPE "NONE"
+#define ENTITY_WRITE_FREQ 50000000
+#define ENTITY_WRITE_HAS_IN 0
+#define ENTITY_WRITE_HAS_OUT 1
+#define ENTITY_WRITE_HAS_TRI 0
+#define ENTITY_WRITE_IRQ -1
+#define ENTITY_WRITE_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_WRITE_IRQ_TYPE "NONE"
+#define ENTITY_WRITE_NAME "/dev/entity_write"
+#define ENTITY_WRITE_RESET_VALUE 0
+#define ENTITY_WRITE_SPAN 16
+#define ENTITY_WRITE_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_x configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_x altera_avalon_pio
+#define ENTITY_X_BASE 0x40
+#define ENTITY_X_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_X_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_X_CAPTURE 0
+#define ENTITY_X_DATA_WIDTH 10
+#define ENTITY_X_DO_TEST_BENCH_WIRING 0
+#define ENTITY_X_DRIVEN_SIM_VALUE 0
+#define ENTITY_X_EDGE_TYPE "NONE"
+#define ENTITY_X_FREQ 50000000
+#define ENTITY_X_HAS_IN 1
+#define ENTITY_X_HAS_OUT 0
+#define ENTITY_X_HAS_TRI 0
+#define ENTITY_X_IRQ -1
+#define ENTITY_X_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_X_IRQ_TYPE "NONE"
+#define ENTITY_X_NAME "/dev/entity_x"
+#define ENTITY_X_RESET_VALUE 0
+#define ENTITY_X_SPAN 16
+#define ENTITY_X_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_y configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_y altera_avalon_pio
+#define ENTITY_Y_BASE 0x30
+#define ENTITY_Y_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_Y_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_Y_CAPTURE 0
+#define ENTITY_Y_DATA_WIDTH 10
+#define ENTITY_Y_DO_TEST_BENCH_WIRING 0
+#define ENTITY_Y_DRIVEN_SIM_VALUE 0
+#define ENTITY_Y_EDGE_TYPE "NONE"
+#define ENTITY_Y_FREQ 50000000
+#define ENTITY_Y_HAS_IN 1
+#define ENTITY_Y_HAS_OUT 0
+#define ENTITY_Y_HAS_TRI 0
+#define ENTITY_Y_IRQ -1
+#define ENTITY_Y_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_Y_IRQ_TYPE "NONE"
+#define ENTITY_Y_NAME "/dev/entity_y"
+#define ENTITY_Y_RESET_VALUE 0
+#define ENTITY_Y_SPAN 16
+#define ENTITY_Y_TYPE "altera_avalon_pio"
 
 
 /*
@@ -194,7 +383,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart_0 altera_avalon_jtag_uart
-#define JTAG_UART_0_BASE 0x98
+#define JTAG_UART_0_BASE 0x110
 #define JTAG_UART_0_IRQ 5
 #define JTAG_UART_0_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_0_NAME "/dev/jtag_uart_0"
@@ -212,7 +401,7 @@
  */
 
 #define ALT_MODULE_CLASS_keycode altera_avalon_pio
-#define KEYCODE_BASE 0x70
+#define KEYCODE_BASE 0xe0
 #define KEYCODE_BIT_CLEARING_EDGE_REGISTER 0
 #define KEYCODE_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define KEYCODE_CAPTURE 0
@@ -268,7 +457,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_address altera_avalon_pio
-#define OTG_HPI_ADDRESS_BASE 0x50
+#define OTG_HPI_ADDRESS_BASE 0xc0
 #define OTG_HPI_ADDRESS_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_ADDRESS_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_ADDRESS_CAPTURE 0
@@ -295,7 +484,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_cs altera_avalon_pio
-#define OTG_HPI_CS_BASE 0x60
+#define OTG_HPI_CS_BASE 0xd0
 #define OTG_HPI_CS_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_CS_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_CS_CAPTURE 0
@@ -322,7 +511,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_data altera_avalon_pio
-#define OTG_HPI_DATA_BASE 0x40
+#define OTG_HPI_DATA_BASE 0xb0
 #define OTG_HPI_DATA_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_DATA_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_DATA_CAPTURE 0
@@ -349,7 +538,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_r altera_avalon_pio
-#define OTG_HPI_R_BASE 0x30
+#define OTG_HPI_R_BASE 0xa0
 #define OTG_HPI_R_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_R_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_R_CAPTURE 0
@@ -376,7 +565,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_w altera_avalon_pio
-#define OTG_HPI_W_BASE 0x20
+#define OTG_HPI_W_BASE 0x90
 #define OTG_HPI_W_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_W_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_W_CAPTURE 0
@@ -442,7 +631,7 @@
  */
 
 #define ALT_MODULE_CLASS_sdram_pll altpll
-#define SDRAM_PLL_BASE 0x80
+#define SDRAM_PLL_BASE 0xf0
 #define SDRAM_PLL_IRQ -1
 #define SDRAM_PLL_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SDRAM_PLL_NAME "/dev/sdram_pll"
@@ -456,13 +645,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid_qsys_0 altera_avalon_sysid_qsys
-#define SYSID_QSYS_0_BASE 0xa0
+#define SYSID_QSYS_0_BASE 0x108
 #define SYSID_QSYS_0_ID 0
 #define SYSID_QSYS_0_IRQ -1
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1510533420
+#define SYSID_QSYS_0_TIMESTAMP 1512863698
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 #endif /* __SYSTEM_H_ */

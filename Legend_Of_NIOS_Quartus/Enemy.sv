@@ -1,7 +1,7 @@
-module Enemy(input logic Reset, frame_clk, Clk, damage,
-				  input logic [2:0] action,
+module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
+				  input logic [1:0] dir,
 				  input logic [2:0] room,
-				  output logic[9:0] Enemy_X, Enemy_Y
+				  output logic[9:0] Enemy_X, Enemy_Y,
 				  output logic active);
 
 	
@@ -75,7 +75,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage,
         Enemy_Y_Motion_in = 0;
 		  
 		  //Character controls
-		  if(action == 1)
+		  if(dir == 0)
 		  begin
 				/*//Test upper left corner
 				if(!is_wall) begin
@@ -106,7 +106,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage,
 					Enemy_X_Motion_in = 1'b1;
 				
 		  end
-		  else if(action == 2)
+		  else if(dir == 1)
 		  begin
 				//Test upper right corner
 				test_x = test_x + 32;
@@ -127,7 +127,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage,
 					Enemy_Y_Motion_in = 0;
 				end
 		  end
-		  else if(action == 3)
+		  else if(dir == 2)
 		  begin
 				//Test bottom left corner
 				test_y = test_y + 32;
@@ -148,7 +148,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage,
 					Enemy_X_Motion_in = 0;
 				end
 		  end
-		  else if(action == 4)
+		  else if(dir == 3)
 		  begin
 				//Test upper left corner
 				if(!is_wall) begin

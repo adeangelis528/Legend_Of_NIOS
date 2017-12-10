@@ -47,23 +47,23 @@ module nios_system_mm_interconnect_0_router_001_default_decode
      parameter DEFAULT_CHANNEL = 4,
                DEFAULT_WR_CHANNEL = -1,
                DEFAULT_RD_CHANNEL = -1,
-               DEFAULT_DESTID = 10 
+               DEFAULT_DESTID = 17 
    )
-  (output [93 - 90 : 0] default_destination_id,
-   output [12-1 : 0] default_wr_channel,
-   output [12-1 : 0] default_rd_channel,
-   output [12-1 : 0] default_src_channel
+  (output [95 - 91 : 0] default_destination_id,
+   output [19-1 : 0] default_wr_channel,
+   output [19-1 : 0] default_rd_channel,
+   output [19-1 : 0] default_src_channel
   );
 
   assign default_destination_id = 
-    DEFAULT_DESTID[93 - 90 : 0];
+    DEFAULT_DESTID[95 - 91 : 0];
 
   generate
     if (DEFAULT_CHANNEL == -1) begin : no_default_channel_assignment
       assign default_src_channel = '0;
     end
     else begin : default_channel_assignment
-      assign default_src_channel = 12'b1 << DEFAULT_CHANNEL;
+      assign default_src_channel = 19'b1 << DEFAULT_CHANNEL;
     end
   endgenerate
 
@@ -73,8 +73,8 @@ module nios_system_mm_interconnect_0_router_001_default_decode
       assign default_rd_channel = '0;
     end
     else begin : default_rw_channel_assignment
-      assign default_wr_channel = 12'b1 << DEFAULT_WR_CHANNEL;
-      assign default_rd_channel = 12'b1 << DEFAULT_RD_CHANNEL;
+      assign default_wr_channel = 19'b1 << DEFAULT_WR_CHANNEL;
+      assign default_rd_channel = 19'b1 << DEFAULT_RD_CHANNEL;
     end
   endgenerate
 
@@ -93,7 +93,7 @@ module nios_system_mm_interconnect_0_router_001
     // Command Sink (Input)
     // -------------------
     input                       sink_valid,
-    input  [107-1 : 0]    sink_data,
+    input  [109-1 : 0]    sink_data,
     input                       sink_startofpacket,
     input                       sink_endofpacket,
     output                      sink_ready,
@@ -102,8 +102,8 @@ module nios_system_mm_interconnect_0_router_001
     // Command Source (Output)
     // -------------------
     output                          src_valid,
-    output reg [107-1    : 0] src_data,
-    output reg [12-1 : 0] src_channel,
+    output reg [109-1    : 0] src_data,
+    output reg [19-1 : 0] src_channel,
     output                          src_startofpacket,
     output                          src_endofpacket,
     input                           src_ready
@@ -114,12 +114,12 @@ module nios_system_mm_interconnect_0_router_001
     // -------------------------------------------------------
     localparam PKT_ADDR_H = 64;
     localparam PKT_ADDR_L = 36;
-    localparam PKT_DEST_ID_H = 93;
-    localparam PKT_DEST_ID_L = 90;
-    localparam PKT_PROTECTION_H = 97;
-    localparam PKT_PROTECTION_L = 95;
-    localparam ST_DATA_W = 107;
-    localparam ST_CHANNEL_W = 12;
+    localparam PKT_DEST_ID_H = 95;
+    localparam PKT_DEST_ID_L = 91;
+    localparam PKT_PROTECTION_H = 99;
+    localparam PKT_PROTECTION_L = 97;
+    localparam ST_DATA_W = 109;
+    localparam ST_CHANNEL_W = 19;
     localparam DECODER_TYPE = 0;
 
     localparam PKT_TRANS_WRITE = 67;
@@ -135,8 +135,8 @@ module nios_system_mm_interconnect_0_router_001
     // during address decoding
     // -------------------------------------------------------
     localparam PAD0 = log2ceil(64'h10 - 64'h0); 
-    localparam PAD1 = log2ceil(64'h90 - 64'h80); 
-    localparam PAD2 = log2ceil(64'ha8 - 64'ha0); 
+    localparam PAD1 = log2ceil(64'h100 - 64'hf0); 
+    localparam PAD2 = log2ceil(64'h110 - 64'h108); 
     localparam PAD3 = log2ceil(64'h1800 - 64'h1000); 
     localparam PAD4 = log2ceil(64'h18000000 - 64'h10000000); 
     // -------------------------------------------------------
@@ -168,7 +168,7 @@ module nios_system_mm_interconnect_0_router_001
     assign src_startofpacket = sink_startofpacket;
     assign src_endofpacket   = sink_endofpacket;
     wire [PKT_DEST_ID_W-1:0] default_destid;
-    wire [12-1 : 0] default_src_channel;
+    wire [19-1 : 0] default_src_channel;
 
 
 
@@ -199,32 +199,32 @@ module nios_system_mm_interconnect_0_router_001
 
     // ( 0x0 .. 0x10 )
     if ( {address[RG:PAD0],{PAD0{1'b0}}} == 29'h0   ) begin
-            src_channel = 12'b01000;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 3;
+            src_channel = 19'b01000;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 10;
     end
 
-    // ( 0x80 .. 0x90 )
-    if ( {address[RG:PAD1],{PAD1{1'b0}}} == 29'h80   ) begin
-            src_channel = 12'b00100;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 9;
+    // ( 0xf0 .. 0x100 )
+    if ( {address[RG:PAD1],{PAD1{1'b0}}} == 29'hf0   ) begin
+            src_channel = 19'b00100;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 16;
     end
 
-    // ( 0xa0 .. 0xa8 )
-    if ( {address[RG:PAD2],{PAD2{1'b0}}} == 29'ha0  && read_transaction  ) begin
-            src_channel = 12'b00001;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 11;
+    // ( 0x108 .. 0x110 )
+    if ( {address[RG:PAD2],{PAD2{1'b0}}} == 29'h108  && read_transaction  ) begin
+            src_channel = 19'b00001;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 18;
     end
 
     // ( 0x1000 .. 0x1800 )
     if ( {address[RG:PAD3],{PAD3{1'b0}}} == 29'h1000   ) begin
-            src_channel = 12'b00010;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 2;
+            src_channel = 19'b00010;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 9;
     end
 
     // ( 0x10000000 .. 0x18000000 )
     if ( {address[RG:PAD4],{PAD4{1'b0}}} == 29'h10000000   ) begin
-            src_channel = 12'b10000;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 10;
+            src_channel = 19'b10000;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 17;
     end
 
 end

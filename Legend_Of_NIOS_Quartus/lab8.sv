@@ -98,7 +98,14 @@ module lab8( input               CLOCK_50,
                              .otg_hpi_data_out_port(hpi_data_out),
                              .otg_hpi_cs_export(hpi_cs),
                              .otg_hpi_r_export(hpi_r),
-                             .otg_hpi_w_export(hpi_w)
+                             .otg_hpi_w_export(hpi_w),
+									  .entity_active_export(toNIOS_Active),
+									  .entity_dir_export(sel_dir),
+									  .entity_read_export(read),
+									  .entity_select_export(select),
+									  .entity_write_export(write),
+									  .entity_x_export(toNIOS_X),
+									  .entity_y_export(toNIOS_Y)
     );
   
     // Use PLL to generate the 25MHZ VGA_CLK. Do not modify it.
@@ -132,10 +139,28 @@ module lab8( input               CLOCK_50,
 	 //Temporary
 	 //assign room = 0;
 	 //assign bg_type = 0;
+	   logic[2:0] select;
+	   logic read, write;
+	   logic[1:0] sel_dir;
+	   logic[9:0] Enemy1_X, Enemy2_X, Enemy3_X, Enemy4_X, Enemy5_X;
+	   logic[9:0] Enemy1_Y, Enemy2_Y, Enemy3_Y, Enemy4_Y, Enemy5_Y;
+	   logic Enemy1_Active, Enemy2_Active, Enemy3_Active, Enemy4_Active, Enemy5_Active;
+	   logic[9:0] toNIOS_X, toNIOS_Y;
+	   logic[1:0] toEnemy1_dir, toEnemy2_dir, toEnemy3_dir, toEnemy4_dir, toEnemy5_dir;
+	   logic toNIOS_Active;
+	 
 	 
 	 //Game state
 	 GameState gamedata(.Clk, .Reset(Reset_h), .Frame_clk(VGA_VS), .Player_X, .Player_Y,
 								.health, .score1, .score2);
+	
+	 EntityInterface entities(.select, .clk(Clk), .read, .write, .sel_dir,
+										.Enemy1_X, .Enemy2_X, .Enemy3_X, .Enemy4_X, .Enemy5_X, .Player_X,
+										.Enemy1_Y, .Enemy2_Y, .Enemy3_Y, .Enemy4_Y, .Enemy5_Y, .Player_Y,
+										.Enemy1_Active, .Enemy2_Active, .Enemy3_Active, .Enemy4_Active, .Enemy5_Active,
+										.toNIOS_X, .toNIOS_Y,
+										.toEnemy1_dir, .toEnemy2_dir, .toEnemy3_dir, .toEnemy4_dir, .toEnemy5_dir,
+										.toNIOS_Active);
 	 
 	 //Level Data
 	 level_rom level_instance(.DrawX, .DrawY, .room, .bg_type);
@@ -151,6 +176,8 @@ module lab8( input               CLOCK_50,
 	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS), .room, .doorcode,
 									.keycode(keycode[7:0]), .Player_X, .Player_Y);
 	 
+	 Enemy enemy1(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .dir(toEnemy1_dir), .room, 
+						.Enemy_X(Enemy1_X), .Enemy_Y(Enemy1_Y), .active(Enemy1_Active));
 	 
 	 //Interface modules
     VGA_controller vga_controller_instance(.Clk, 
@@ -167,6 +194,7 @@ module lab8( input               CLOCK_50,
     color_mapper color_instance(.DrawX,
 										  .DrawY,
 										  .Player_X, .Player_Y,
+										  .Enemy1_X, .Enemy1_Y,
 										  .bg_r, .bg_g, .bg_b,
 										  .font_addr, .text_offset, .draw_text,
 										  .VGA_R,

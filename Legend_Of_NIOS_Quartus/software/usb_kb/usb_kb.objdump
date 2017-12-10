@@ -77,7 +77,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  29 .quartus_project_dir 00000046  00000000  00000000  0006d7b2  2**0
                   CONTENTS, READONLY
- 30 .sopcinfo     0006cfcd  00000000  00000000  0006d7f8  2**0
+ 30 .sopcinfo     00097b10  00000000  00000000  0006d7f8  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 10000000 l    d  .entry	00000000 .entry
@@ -863,7 +863,7 @@ alt_after_alt_main:
 100001f4:	003fff06 	br	100001f4 <__alt_data_end+0xf80001f4>
 
 100001f8 <IO_init>:
-#define otg_hpi_cs			(volatile char*) 0x0060 //OTG_HPI_CS_BASE //FOR SOME REASON CS BASE BEHAVES WEIRDLY MIGHT HAVE TO SET MANUALLY
+#define otg_hpi_cs			(volatile char*) 0x00d0 //OTG_HPI_CS_BASE //FOR SOME REASON CS BASE BEHAVES WEIRDLY MIGHT HAVE TO SET MANUALLY
 #define otg_hpi_w			(volatile char*) OTG_HPI_W_BASE
 
 
@@ -873,21 +873,21 @@ void IO_init(void)
 100001fc:	df000015 	stw	fp,0(sp)
 10000200:	d839883a 	mov	fp,sp
 	*otg_hpi_cs = 0;
-10000204:	00801804 	movi	r2,96
+10000204:	00803404 	movi	r2,208
 10000208:	10000005 	stb	zero,0(r2)
 	*otg_hpi_r = 1;
-1000020c:	00800c04 	movi	r2,48
+1000020c:	00802804 	movi	r2,160
 10000210:	00c00044 	movi	r3,1
 10000214:	10c00005 	stb	r3,0(r2)
 	*otg_hpi_w = 1;
-10000218:	00800804 	movi	r2,32
+10000218:	00802404 	movi	r2,144
 1000021c:	00c00044 	movi	r3,1
 10000220:	10c00005 	stb	r3,0(r2)
 	*otg_hpi_address = 0;
-10000224:	00801404 	movi	r2,80
+10000224:	00803004 	movi	r2,192
 10000228:	10000015 	stw	zero,0(r2)
 	*otg_hpi_data = 0;
-1000022c:	00801004 	movi	r2,64
+1000022c:	00802c04 	movi	r2,176
 10000230:	10000015 	stw	zero,0(r2)
 }
 10000234:	e037883a 	mov	sp,fp
@@ -912,18 +912,18 @@ void IO_write(alt_u8 Address, alt_u16 Data)
 //							Write this function							   //
 //*************************************************************************//
 	*otg_hpi_address = Address;
-10000260:	00801404 	movi	r2,80
+10000260:	00803004 	movi	r2,192
 10000264:	e0fffe03 	ldbu	r3,-8(fp)
 10000268:	10c00015 	stw	r3,0(r2)
 	*otg_hpi_w = 0;
-1000026c:	00800804 	movi	r2,32
+1000026c:	00802404 	movi	r2,144
 10000270:	10000005 	stb	zero,0(r2)
 	*otg_hpi_data = Data;
-10000274:	00801004 	movi	r2,64
+10000274:	00802c04 	movi	r2,176
 10000278:	e0ffff0b 	ldhu	r3,-4(fp)
 1000027c:	10c00015 	stw	r3,0(r2)
 	*otg_hpi_w = 1;
-10000280:	00800804 	movi	r2,32
+10000280:	00802404 	movi	r2,144
 10000284:	00c00044 	movi	r3,1
 10000288:	10c00005 	stb	r3,0(r2)
 }
@@ -947,18 +947,18 @@ alt_u16 IO_read(alt_u8 Address)
 //							Write this function							   //
 //*************************************************************************//
 	*otg_hpi_address = Address;
-100002b0:	00801404 	movi	r2,80
+100002b0:	00803004 	movi	r2,192
 100002b4:	e0ffff03 	ldbu	r3,-4(fp)
 100002b8:	10c00015 	stw	r3,0(r2)
 	*otg_hpi_r = 0;
-100002bc:	00800c04 	movi	r2,48
+100002bc:	00802804 	movi	r2,160
 100002c0:	10000005 	stb	zero,0(r2)
 	temp = *otg_hpi_data;
-100002c4:	00801004 	movi	r2,64
+100002c4:	00802c04 	movi	r2,176
 100002c8:	10800017 	ldw	r2,0(r2)
 100002cc:	e0bffe0d 	sth	r2,-8(fp)
 	*otg_hpi_r = 1;
-100002d0:	00800c04 	movi	r2,48
+100002d0:	00802804 	movi	r2,160
 100002d4:	00c00044 	movi	r3,1
 100002d8:	10c00005 	stb	r3,0(r2)
 
@@ -2390,7 +2390,7 @@ int main(void)
 		IOWR(KEYCODE_BASE, 0, keycode & 0xff);
 10000eec:	e0bffd17 	ldw	r2,-12(fp)
 10000ef0:	10c03fcc 	andi	r3,r2,255
-10000ef4:	00801c04 	movi	r2,112
+10000ef4:	00803804 	movi	r2,224
 10000ef8:	10c00035 	stwio	r3,0(r2)
 
 
@@ -21701,7 +21701,7 @@ int alt_get_fd (alt_dev* dev)
 100110d8:	d9400015 	stw	r5,0(sp)
 100110dc:	d9800115 	stw	r6,4(sp)
 100110e0:	d9c00215 	stw	r7,8(sp)
-100110e4:	00000000 	call	10000000 <__alt_mem_sdram>
+100110e4:	00000000 	call	10000000 <__reset>
 100110e8:	d9400017 	ldw	r5,0(sp)
 100110ec:	d9800117 	ldw	r6,4(sp)
 100110f0:	d9c00217 	ldw	r7,8(sp)
@@ -21787,7 +21787,7 @@ int alt_get_fd (alt_dev* dev)
 10011228:	10003426 	beq	r2,zero,100112fc <__call_exitprocs+0x18c>
 1001122c:	9809883a 	mov	r4,r19
 10011230:	a8800015 	stw	r2,0(r21)
-10011234:	00000000 	call	10000000 <__alt_mem_sdram>
+10011234:	00000000 	call	10000000 <__reset>
 10011238:	acc00017 	ldw	r19,0(r21)
 1001123c:	983fe41e 	bne	r19,zero,100111d0 <__alt_data_end+0xf80111d0>
 10011240:	dfc00b17 	ldw	ra,44(sp)

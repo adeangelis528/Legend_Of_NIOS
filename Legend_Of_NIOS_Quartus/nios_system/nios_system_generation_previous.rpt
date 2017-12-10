@@ -1,0 +1,144 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\Users\Andrew\Documents\ECE385\Legend_Of_NIOS\Legend_Of_NIOS_Quartus\nios_system.qsys --block-symbol-file --output-directory=C:\Users\Andrew\Documents\ECE385\Legend_Of_NIOS\Legend_Of_NIOS_Quartus\nios_system --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading Legend_Of_NIOS_Quartus/nios_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 15.0]
+Progress: Parameterizing module clk_0
+Progress: Adding entity_active [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_active
+Progress: Adding entity_dir [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_dir
+Progress: Adding entity_read [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_read
+Progress: Adding entity_select [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_select
+Progress: Adding entity_write [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_write
+Progress: Adding entity_x [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_x
+Progress: Adding entity_y [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_y
+Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 15.0]
+Progress: Parameterizing module jtag_uart_0
+Progress: Adding keycode [altera_avalon_pio 15.0]
+Progress: Parameterizing module keycode
+Progress: Adding nios2_qsys_0 [altera_nios2_gen2 15.0]
+Progress: Parameterizing module nios2_qsys_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 15.0]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Adding otg_hpi_address [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_address
+Progress: Adding otg_hpi_cs [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_cs
+Progress: Adding otg_hpi_data [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_data
+Progress: Adding otg_hpi_r [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_r
+Progress: Adding otg_hpi_w [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_w
+Progress: Adding sdram [altera_avalon_new_sdram_controller 15.0]
+Progress: Parameterizing module sdram
+Progress: Adding sdram_pll [altpll 15.0]
+Progress: Parameterizing module sdram_pll
+Progress: Adding sysid_qsys_0 [altera_avalon_sysid_qsys 15.0]
+Progress: Parameterizing module sysid_qsys_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: nios_system.entity_active: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.entity_x: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.entity_y: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.otg_hpi_data: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.sysid_qsys_0: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: nios_system.sysid_qsys_0: Time stamp will be automatically updated when this component is generated.
+Warning: nios_system.entity_active: entity_active.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_dir: entity_dir.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_read: entity_read.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_select: entity_select.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_write: entity_write.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_x: entity_x.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_y: entity_y.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.sdram_pll: sdram_pll.areset_conduit must be exported, or connected to a matching conduit.
+Warning: nios_system.sdram_pll: sdram_pll.locked_conduit must be exported, or connected to a matching conduit.
+Warning: nios_system.sdram_pll: sdram_pll.phasedone_conduit must be exported, or connected to a matching conduit.
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\Andrew\Documents\ECE385\Legend_Of_NIOS\Legend_Of_NIOS_Quartus\nios_system.qsys --synthesis=VERILOG --output-directory=C:\Users\Andrew\Documents\ECE385\Legend_Of_NIOS\Legend_Of_NIOS_Quartus\nios_system\synthesis --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading Legend_Of_NIOS_Quartus/nios_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 15.0]
+Progress: Parameterizing module clk_0
+Progress: Adding entity_active [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_active
+Progress: Adding entity_dir [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_dir
+Progress: Adding entity_read [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_read
+Progress: Adding entity_select [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_select
+Progress: Adding entity_write [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_write
+Progress: Adding entity_x [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_x
+Progress: Adding entity_y [altera_avalon_pio 15.0]
+Progress: Parameterizing module entity_y
+Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 15.0]
+Progress: Parameterizing module jtag_uart_0
+Progress: Adding keycode [altera_avalon_pio 15.0]
+Progress: Parameterizing module keycode
+Progress: Adding nios2_qsys_0 [altera_nios2_gen2 15.0]
+Progress: Parameterizing module nios2_qsys_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 15.0]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Adding otg_hpi_address [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_address
+Progress: Adding otg_hpi_cs [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_cs
+Progress: Adding otg_hpi_data [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_data
+Progress: Adding otg_hpi_r [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_r
+Progress: Adding otg_hpi_w [altera_avalon_pio 15.0]
+Progress: Parameterizing module otg_hpi_w
+Progress: Adding sdram [altera_avalon_new_sdram_controller 15.0]
+Progress: Parameterizing module sdram
+Progress: Adding sdram_pll [altpll 15.0]
+Progress: Parameterizing module sdram_pll
+Progress: Adding sysid_qsys_0 [altera_avalon_sysid_qsys 15.0]
+Progress: Parameterizing module sysid_qsys_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: nios_system.entity_active: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.entity_x: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.entity_y: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.otg_hpi_data: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: nios_system.sysid_qsys_0: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: nios_system.sysid_qsys_0: Time stamp will be automatically updated when this component is generated.
+Warning: nios_system.entity_active: entity_active.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_dir: entity_dir.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_read: entity_read.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_select: entity_select.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_write: entity_write.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_x: entity_x.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.entity_y: entity_y.external_connection must be exported, or connected to a matching conduit.
+Warning: nios_system.sdram_pll: sdram_pll.areset_conduit must be exported, or connected to a matching conduit.
+Warning: nios_system.sdram_pll: sdram_pll.locked_conduit must be exported, or connected to a matching conduit.
+Warning: nios_system.sdram_pll: sdram_pll.phasedone_conduit must be exported, or connected to a matching conduit.
+Info: nios_system: Generating nios_system "nios_system" for QUARTUS_SYNTH
+Info: Inserting clock-crossing logic between cmd_demux.src5 and cmd_mux_005.sink0
+Info: Inserting clock-crossing logic between cmd_demux_001.src4 and cmd_mux_005.sink1
+Info: Inserting clock-crossing logic between rsp_demux_005.src0 and rsp_mux.sink5
+Info: Inserting clock-crossing logic between rsp_demux_005.src1 and rsp_mux_001.sink4
+Info: entity_active: Starting RTL generation for module 'nios_system_entity_active'
+Info: entity_active:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=nios_system_entity_active --dir=C:/Users/Andrew/AppData/Local/Temp/alt7509_4489735582912736500.dir/0001_entity_active_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Andrew/AppData/Local/Temp/alt7509_4489735582912736500.dir/0001_entity_active_gen//nios_system_entity_active_component_configuration.pl  --do_build_sim=0  ]
+Info: entity_active: Done RTL generation for module 'nios_system_entity_active'
+Info: entity_active: "nios_system" instantiated altera_avalon_pio "entity_active"
+Error: Generation stopped, 23 or more modules remaining
+Info: nios_system: Done "nios_system" with 17 modules, 2 files
+Error: ip-generate failed with exit code 1: 1 Error, 10 Warnings
+Info: Stopping: Create HDL design files for synthesis

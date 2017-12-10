@@ -7,7 +7,7 @@
 #define otg_hpi_address		(volatile int*)  OTG_HPI_ADDRESS_BASE
 #define otg_hpi_data		(volatile int*)	 OTG_HPI_DATA_BASE
 #define otg_hpi_r			(volatile char*) OTG_HPI_R_BASE
-#define otg_hpi_cs			(volatile char*) 0x0060 //OTG_HPI_CS_BASE //FOR SOME REASON CS BASE BEHAVES WEIRDLY MIGHT HAVE TO SET MANUALLY
+#define otg_hpi_cs			(volatile char*) 0x00d0 //OTG_HPI_CS_BASE //FOR SOME REASON CS BASE BEHAVES WEIRDLY MIGHT HAVE TO SET MANUALLY
 #define otg_hpi_w			(volatile char*) OTG_HPI_W_BASE
 
 
