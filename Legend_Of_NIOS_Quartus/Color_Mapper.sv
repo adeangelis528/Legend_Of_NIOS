@@ -67,7 +67,7 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 			end
 			
 			//Check for enemy1
-			if(DrawX >= Enemy1_X && DrawY >= Enemy1_Y && DrawX < Enemy1_X + 32 && DrawY < Enemy1_X + 32) begin
+			if(DrawX >= Enemy1_X && DrawY >= Enemy1_Y && DrawX < Enemy1_X + 32 && DrawY < Enemy1_Y + 32) begin
 				sprite_addr = (DrawY - Enemy1_Y + 64); //TODO change to enemy sprite
 				enemy1_on = 1;
 			end

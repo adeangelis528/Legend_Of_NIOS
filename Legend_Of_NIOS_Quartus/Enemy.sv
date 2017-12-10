@@ -5,8 +5,8 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 				  output logic active);
 
 	
-    parameter [9:0] Enemy_X_Start=700;  // Start enemy offscreen
-    parameter [9:0] Enemy_Y_Start=600;  
+    parameter [9:0] Enemy_X_Start=300;  // Start enemy offscreen
+    parameter [9:0] Enemy_Y_Start=200;  
     parameter [9:0] Enemy_X_Step=2;      // Step size on the X axis
     parameter [9:0] Enemy_Y_Step=2;      // Step size on the Y axis
     
@@ -59,6 +59,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
     // You need to modify always_comb block.
     always_comb
     begin
+		  active = 1;
 		  
         // Update the ball's position with its motion
         Enemy_X_Pos_in = Enemy_X + Enemy_X_Motion;

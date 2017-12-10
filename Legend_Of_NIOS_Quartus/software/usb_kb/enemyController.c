@@ -3,13 +3,13 @@
 #include "enemyController.h"
 #include <stdlib.h>
 
-#define select_addr	(volatile int*)  ENTITY_SELECT_BASE
-#define entity_active_addr (volatile int*) ENTITY_ACTIVE_BASE
-#define entity_x_addr (volatile int*) ENTITY_X_BASE
-#define entity_y_addr (volatile int*) ENTITY_Y_BASE
-#define entity_dir_addr (volatile int*) ENTITY_DIR_BASE
-#define entity_read_addr (volatile int*) ENTITY_READ_BASE
-#define entity_write_addr (volatile int*) ENTITY_WRITE_BASE
+#define select_addr	(volatile int*)  0x80
+#define entity_active_addr (volatile int*) 0x20
+#define entity_x_addr (volatile int*) 0x40
+#define entity_y_addr (volatile int*) 0x30
+#define entity_dir_addr (volatile int*) 0x50
+#define entity_read_addr (volatile int*) 0x70
+#define entity_write_addr (volatile int*) 0x60
 
 int enemyCounter[5] = {0,0,0,0,0};
 
@@ -39,6 +39,7 @@ void updateEnemies()
 			*entity_dir_addr = dir;
 			*entity_write_addr = 0;
 			enemyCounter[i-1] = 0;
+			printf("\nEnemy provided code: %04x\n",dir);
 		}
 		enemyCounter[i-1] ++;
 	}
