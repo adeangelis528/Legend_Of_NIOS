@@ -187,19 +187,19 @@ module lab8( input               CLOCK_50,
 									.keycode(keycode[7:0]), .Player_X, .Player_Y, .attack(player_attack));
 	 
 	 //Five enemies
-	 Enemy enemy1(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E1), .initialize, .dir(toEnemy1_dir), .room, .number(3'b001),
+	 Enemy enemy1(.Reset(game_reset), .frame_clk(VGA_VS), .Clk, .damage(Damage_E1), .initialize, .dir(toEnemy1_dir), .room, .number(3'b001),
 						.Enemy_X(Enemy1_X), .Enemy_Y(Enemy1_Y), .active(Enemy1_Active), .Enemy_Type(Type_E1));
 						
-	 Enemy enemy2(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E2), .initialize, .dir(toEnemy2_dir), .room, .number(3'b010),
+	 Enemy enemy2(.Reset(game_reset), .frame_clk(VGA_VS), .Clk, .damage(Damage_E2), .initialize, .dir(toEnemy2_dir), .room, .number(3'b010),
 						.Enemy_X(Enemy2_X), .Enemy_Y(Enemy2_Y), .active(Enemy2_Active), .Enemy_Type(Type_E2));
 						
-	 Enemy enemy3(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E3), .initialize, .dir(toEnemy3_dir), .room, .number(3'b011),
+	 Enemy enemy3(.Reset(game_reset), .frame_clk(VGA_VS), .Clk, .damage(Damage_E3), .initialize, .dir(toEnemy3_dir), .room, .number(3'b011),
 						.Enemy_X(Enemy3_X), .Enemy_Y(Enemy3_Y), .active(Enemy3_Active), .Enemy_Type(Type_E3));
 						
-	 Enemy enemy4(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E4), .initialize, .dir(toEnemy4_dir), .room, .number(3'b100),
+	 Enemy enemy4(.Reset(game_reset), .frame_clk(VGA_VS), .Clk, .damage(Damage_E4), .initialize, .dir(toEnemy4_dir), .room, .number(3'b100),
 						.Enemy_X(Enemy4_X), .Enemy_Y(Enemy4_Y), .active(Enemy4_Active), .Enemy_Type(Type_E4));
 						
-	 Enemy enemy5(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E5), .initialize, .dir(toEnemy5_dir), .room, .number(3'b101),
+	 Enemy enemy5(.Reset(game_reset), .frame_clk(VGA_VS), .Clk, .damage(Damage_E5), .initialize, .dir(toEnemy5_dir), .room, .number(3'b101),
 						.Enemy_X(Enemy5_X), .Enemy_Y(Enemy5_Y), .active(Enemy5_Active), .Enemy_Type(Type_E5));
 	 
 	 //Interface modules

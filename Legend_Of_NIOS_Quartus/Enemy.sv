@@ -6,10 +6,10 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 				  output logic [1:0] Enemy_Type);
 
 	
-    parameter [9:0] Enemy_X_Start=300;  // Start enemy offscreen
-    parameter [9:0] Enemy_Y_Start=100;  
+    parameter [9:0] Enemy_X_Start=700;  // Start enemy offscreen
+    parameter [9:0] Enemy_Y_Start=700;  
     parameter [9:0] Enemy_X_Step=2;      // Step size on the X axis
-    parameter [9:0] Enemy_Y_Step=2;      // Step size on the Y axis
+    logic [9:0] Enemy_Y_Step=2;      // Step size on the Y axis
     
     logic [9:0] Enemy_X_Motion, Enemy_Y_Motion;
     logic [9:0] Enemy_X_Pos_in, Enemy_X_Motion_in, Enemy_Y_Pos_in, Enemy_Y_Motion_in;
@@ -37,8 +37,6 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 	 
     always_ff @ (posedge Clk) begin
         frame_clk_delayed <= frame_clk;
-		  active <= active_next;
-		  Enemy_Type <= Type_next;
     end
 	 
     assign frame_clk_rising_edge = (frame_clk == 1'b1) && (frame_clk_delayed == 1'b0);
@@ -50,6 +48,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
         begin
             Enemy_X <= Enemy_X_Start;
             Enemy_Y <= Enemy_Y_Start;
+				active <= 0;
             Enemy_X_Motion <= 10'd0;
             Enemy_Y_Motion <= 10'd0;
         end
@@ -58,6 +57,8 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
         begin
             Enemy_X <= Enemy_X_Pos_in;
             Enemy_Y <= Enemy_Y_Pos_in;
+				active <= active_next;
+				Enemy_Type <= Type_next;
             Enemy_X_Motion <= Enemy_X_Motion_in;
             Enemy_Y_Motion <= Enemy_Y_Motion_in;
         end
@@ -67,6 +68,16 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
     // You need to modify always_comb block.
     always_comb
     begin
+	 
+		  if(Enemy_Type == 3)
+		  begin
+				Enemy_Y_Step = 4;
+		  end
+		  else
+		  begin
+				Enemy_Y_Step = 2;
+		  end
+		  
         active_next = active;
 		  Type_next = Enemy_Type;
 		  
@@ -165,7 +176,7 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 						//Test upper right corner
 						test_x = test_x + 32;
 						if(!is_wall) begin
-							Enemy_Y_Motion_in = ~(Enemy_X_Step) + 1'b1;
+							Enemy_Y_Motion_in = ~(Enemy_Y_Step) + 1'b1;
 							Enemy_X_Motion_in = 0;
 						end
 						else begin
@@ -199,10 +210,19 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 		  
 		  if(initialize) begin
 			  if(room == 0) begin
-					active_next = 0;
-					Enemy_X_Pos_in = 700;
-					Enemy_Y_Pos_in = 700;
-					Type_next = 0;
+					if(number == 1) begin
+						active_next = 1;
+						Type_next = 3;
+						Enemy_X_Pos_in = 64;
+						Enemy_Y_Pos_in = 64;
+					
+					end
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 700;
+						Enemy_Y_Pos_in = 700;
+						Type_next = 0;
+					end
 				end
 				
 				//Room 1 Enemy locations and types
@@ -252,42 +272,42 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 				else if(room == 2) begin
 					if(number == 1) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 160;
+						Enemy_X_Pos_in = 448;
 						Enemy_Y_Pos_in = 160;
 						Type_next = 1;
 					end
 					
 					else if(number == 2) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 480;
+						Enemy_X_Pos_in = 128;
 						Enemy_Y_Pos_in = 160;
 						Type_next = 1;
 					end
 					
 					else if(number == 3) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 320;
+						Enemy_X_Pos_in = 288;
 						Enemy_Y_Pos_in = 224;
 						Type_next = 1;
 					end
 					
 					else if(number == 4) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 224;
+						Enemy_X_Pos_in = 384;
 						Enemy_Y_Pos_in = 352;
 						Type_next = 2;
 					end
 					
 					else if(number == 5) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 416;
+						Enemy_X_Pos_in = 192;
 						Enemy_Y_Pos_in = 352;
 						Type_next = 2;
 					end
 					else begin
 						active_next = 0;
-						Enemy_X_Pos_in = 0;
-						Enemy_Y_Pos_in = 0;
+						Enemy_X_Pos_in = 700;
+						Enemy_Y_Pos_in = 700;
 						Type_next = 0;
 					end
 				end
@@ -295,152 +315,21 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 				else if(room == 3) begin
 					if(number == 1) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 128;
+						Enemy_X_Pos_in = 480;
 						Enemy_Y_Pos_in = 96;
 						Type_next = 1;
 					end
 					
 					else if(number == 2) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 544;
+						Enemy_X_Pos_in = 64;
 						Enemy_Y_Pos_in = 64;
 						Type_next = 1;
 					end
 					
 					else if(number == 3) begin
 						active_next = 1;
-						Enemy_X_Pos_in = 160;
-						Enemy_Y_Pos_in = 256;
-						Type_next = 1;
-					end
-					
-					else if(number == 4) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 544;
-						Enemy_Y_Pos_in = 288;
-						Type_next = 1;
-					end
-					
-					else if(number == 5) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 96;
-						Enemy_Y_Pos_in = 416;
-						Type_next = 1;
-					end
-					else begin
-						active_next = 0;
-						Enemy_X_Pos_in = 0;
-						Enemy_Y_Pos_in = 0;
-						Type_next = 0;
-					end
-				end
-					
-				else if(room == 4) begin
-					if(number == 1) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 224;
-						Enemy_Y_Pos_in = 160;
-						Type_next = 1;
-					end
-					
-					else if(number == 2) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 160;
-						Enemy_Y_Pos_in = 352;
-						Type_next = 2;
-					end
-					
-					else if(number == 3) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 32;
-						Enemy_Y_Pos_in = 416;
-						Type_next = 3;
-					end
-					
-					else if(number == 4) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 480;
-						Enemy_Y_Pos_in = 128;
-						Type_next = 2;
-					end
-					
-					else if(number == 5) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 576;
-						Enemy_Y_Pos_in = 416;
-						Type_next = 1;
-					end
-					
-					else begin
-						active_next = 0;
-						Enemy_X_Pos_in = 0;
-						Enemy_Y_Pos_in = 0;
-						Type_next = 0;
-					end
-				end
-				
-				else if(room == 5) begin
-					if(number == 1) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 192;
-						Enemy_Y_Pos_in = 192;
-						Type_next = 3;
-					end
-					
-					else if(number == 2) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 416;
-						Enemy_Y_Pos_in = 192;
-						Type_next = 3;
-					end
-					
-					else if(number == 3) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 544;
-						Enemy_Y_Pos_in = 224;
-						Type_next = 2;
-					end
-					
-					else if(number == 4) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 192;
-						Enemy_Y_Pos_in = 288;
-						Type_next = 3;
-					end
-					
-					else if(number == 5) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 416;
-						Enemy_Y_Pos_in = 288;
-						Type_next = 1;
-					end
-					
-					else begin
-						active_next = 0;
-						Enemy_X_Pos_in = 0;
-						Enemy_Y_Pos_in = 0;
-						Type_next = 0;
-					end
-				end
-				
-				else if(room == 6) begin
-					if(number == 1) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 192;
-						Enemy_Y_Pos_in = 128;
-						Type_next = 2;
-					end
-					
-					else if(number == 2) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 416;
-						Enemy_Y_Pos_in = 128;
-						Type_next = 2;
-					end
-					
-					else if(number == 3) begin
-						active_next = 1;
-						Enemy_X_Pos_in = 288;
+						Enemy_X_Pos_in = 448;
 						Enemy_Y_Pos_in = 256;
 						Type_next = 1;
 					end
@@ -449,28 +338,159 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 						active_next = 1;
 						Enemy_X_Pos_in = 64;
 						Enemy_Y_Pos_in = 288;
+						Type_next = 1;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 512;
+						Enemy_Y_Pos_in = 416;
+						Type_next = 1;
+					end
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 700;
+						Enemy_Y_Pos_in = 700;
+						Type_next = 0;
+					end
+				end
+					
+				else if(room == 4) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 384;
+						Enemy_Y_Pos_in = 160;
+						Type_next = 1;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 448;
+						Enemy_Y_Pos_in = 352;
+						Type_next = 2;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 576;
+						Enemy_Y_Pos_in = 416;
+						Type_next = 3;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 128;
+						Enemy_Y_Pos_in = 128;
 						Type_next = 2;
 					end
 					
 					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 32;
+						Enemy_Y_Pos_in = 416;
+						Type_next = 1;
+					end
+					
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 700;
+						Enemy_Y_Pos_in = 700;
+						Type_next = 0;
+					end
+				end
+				
+				else if(room == 5) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 192;
+						Type_next = 3;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 192;
+						Enemy_Y_Pos_in = 192;
+						Type_next = 3;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 64;
+						Enemy_Y_Pos_in = 224;
+						Type_next = 2;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 3;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 192;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 3;
+					end
+					
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 700;
+						Enemy_Y_Pos_in = 700;
+						Type_next = 0;
+					end
+				end
+				
+				else if(room == 6) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 128;
+						Type_next = 2;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 192;
+						Enemy_Y_Pos_in = 128;
+						Type_next = 2;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 320;
+						Enemy_Y_Pos_in = 256;
+						Type_next = 1;
+					end
+					
+					else if(number == 4) begin
 						active_next = 1;
 						Enemy_X_Pos_in = 544;
 						Enemy_Y_Pos_in = 288;
 						Type_next = 2;
 					end
 					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 64;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 2;
+					end
+					
 					else begin
 						active_next = 0;
-						Enemy_X_Pos_in = 0;
-						Enemy_Y_Pos_in = 0;
+						Enemy_X_Pos_in = 700;
+						Enemy_Y_Pos_in = 700;
 						Type_next = 0;
 					end
 				end
 				
 				else begin
 					active_next = 0;
-					Enemy_X_Pos_in = 0;
-					Enemy_Y_Pos_in = 0;
+					Enemy_X_Pos_in = 700;
+					Enemy_Y_Pos_in = 700;
 					Type_next = 0;
 				end
 			end

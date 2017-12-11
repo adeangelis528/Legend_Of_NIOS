@@ -23,6 +23,22 @@ end
 
 always_ff @ (posedge Frame_clk) begin
 	
+	Damage_E1 <= 0;
+	Damage_E2 <= 0;
+	Damage_E3 <= 0;
+	Damage_E4 <= 0;
+	Damage_E5 <= 0;
+	health <= health;
+	score1 <= next_score1;
+	score2 <= next_score2;
+	damage <= damage;
+	game_over <= 0;
+	if(counter < 125)
+		counter <= counter + 1;
+	else
+		counter <= counter;
+	
+	
 	if(Reset || health == 0) begin
 		score1 <= 0;
 		score2 <= 0;
@@ -31,35 +47,35 @@ always_ff @ (posedge Frame_clk) begin
 	end
 	
 	//Player attack detection===================
-	else if(Player_Attack && ((Player_X - Enemy1_X < 48 || Player_X - Enemy1_X > -48) 
-				&& (Player_Y - Enemy1_Y < 48 || Player_Y - Enemy1_Y > -48))) begin
+	else if(Player_Attack && ((Player_X - Enemy1_X < 64 || Player_X - Enemy1_X > -64) 
+				&& (Player_Y - Enemy1_Y < 64 || Player_Y - Enemy1_Y > -64))) begin
 		Damage_E1 <= 1;
 	end
 	
-	else if(Player_Attack && ((Player_X - Enemy2_X < 48 || Player_X - Enemy2_X > -48) 
-				&& (Player_Y - Enemy2_Y < 48 || Player_Y - Enemy2_Y > -48))) begin
+	else if(Player_Attack && ((Player_X - Enemy2_X < 64 || Player_X - Enemy2_X > -64) 
+				&& (Player_Y - Enemy2_Y < 64 || Player_Y - Enemy2_Y > -64))) begin
 		Damage_E2 <= 1;
 	end
 	
-	else if(Player_Attack && ((Player_X - Enemy3_X < 48 || Player_X - Enemy3_X > -48) 
-				&& (Player_Y - Enemy3_Y < 48 || Player_Y - Enemy3_Y > -48))) begin
+	else if(Player_Attack && ((Player_X - Enemy3_X < 64 || Player_X - Enemy3_X > -64) 
+				&& (Player_Y - Enemy3_Y < 64 || Player_Y - Enemy3_Y > -64))) begin
 		Damage_E3 <= 1;
 	end
 	
-	else if(Player_Attack && ((Player_X - Enemy4_X < 48 || Player_X - Enemy4_X > -48) 
-				&& (Player_Y - Enemy4_Y < 48 || Player_Y - Enemy4_Y > -48))) begin
+	else if(Player_Attack && ((Player_X - Enemy4_X < 64 || Player_X - Enemy4_X > -64) 
+				&& (Player_Y - Enemy4_Y < 64 || Player_Y - Enemy4_Y > -64))) begin
 		Damage_E4 <= 1;
 	end
 	
-	else if(Player_Attack && ((Player_X - Enemy5_X < 48 || Player_X - Enemy5_X > -48) 
-				&& (Player_Y - Enemy5_Y < 48 || Player_Y - Enemy5_Y > -48))) begin
+	else if(Player_Attack && ((Player_X - Enemy5_X < 64 || Player_X - Enemy5_X > -64) 
+				&& (Player_Y - Enemy5_Y < 64 || Player_Y - Enemy5_Y > -64))) begin
 		Damage_E5 <= 1;
 	end
 	//End of Player Attack detection ===============================================
 	
 	//Enemy 1 damage
 	else if((Player_X - Enemy1_X < 32 || Player_X - Enemy1_X > -32) && (Player_Y - Enemy1_Y < 32 || Player_Y - Enemy1_Y > -32)) begin
-		if(counter >= 120) begin
+		if(counter >= 90) begin
 			health <= health - 1;
 			counter <= 0;
 		end
@@ -67,7 +83,7 @@ always_ff @ (posedge Frame_clk) begin
 	
 	//Enemy 2 damage
 	else if((Player_X - Enemy2_X < 32 || Player_X - Enemy2_X > -32) && (Player_Y - Enemy2_Y < 32 || Player_Y - Enemy2_Y > -32)) begin
-		if(counter >= 120) begin
+		if(counter >= 90) begin
 			health <= health - 1;
 			counter <= 0;
 		end
@@ -75,7 +91,7 @@ always_ff @ (posedge Frame_clk) begin
 	
 	//Enemy 3 damage
 	else if((Player_X - Enemy3_X < 32 || Player_X - Enemy3_X > -32) && (Player_Y - Enemy3_Y < 32 || Player_Y - Enemy3_Y > -32)) begin
-		if(counter >= 120) begin
+		if(counter >= 90) begin
 			health <= health - 1;
 			counter <= 0;
 		end
@@ -83,7 +99,7 @@ always_ff @ (posedge Frame_clk) begin
 	
 	//Enemy 4 damage
 	else if((Player_X - Enemy4_X < 32 || Player_X - Enemy4_X > -32) && (Player_Y - Enemy4_Y < 32 || Player_Y - Enemy4_Y > -32)) begin
-		if(counter >= 120) begin
+		if(counter >= 90) begin
 			health <= health - 1;
 			counter <= 0;
 		end
@@ -91,27 +107,14 @@ always_ff @ (posedge Frame_clk) begin
 	
 	//Enemy 5 damage
 	else if((Player_X - Enemy5_X < 32 || Player_X - Enemy5_X > -32) && (Player_Y - Enemy5_Y < 32 || Player_Y - Enemy5_Y > -32)) begin
-		if(counter >= 120) begin
+		if(counter >= 90) begin
 			health <= health - 1;
 			counter <= 0;
 		end
 	end
 	
 	else begin
-	   Damage_E1 <= 0;
-		Damage_E2 <= 0;
-		Damage_E3 <= 0;
-		Damage_E4 <= 0;
-		Damage_E5 <= 0;
-		health <= health;
-		score1 <= next_score1;
-		score2 <= next_score2;
-		damage <= damage;
-		game_over <= 0;
-		if(counter < 125)
-			counter <= counter + 1;
-		else
-			counter <= counter;
+	   
 	end
 end
 
