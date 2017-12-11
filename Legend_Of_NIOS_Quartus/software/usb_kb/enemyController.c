@@ -34,9 +34,9 @@ void updateEnemies()
 		int enemy_active = *entity_active_addr;
 		int enemy_type = *entity_type_addr;
 		*entity_read_addr = 0;
-		if(enemy_type == 1)
+		if(enemy_active && enemy_type == 1)
 		{
-			if(enemy_active && enemyCounter[i-1] >= 3)
+			if( enemyCounter[i-1] >= 3)
 			{
 				int dir = rand() % 4 + 1;
 				*entity_write_addr = 1;
@@ -46,7 +46,7 @@ void updateEnemies()
 				printf("\nEnemy direction changed");
 			}
 		}
-		else if(enemy_type == 2)
+		else if(enemy_active && enemy_type == 2)
 		{
 			if(enemy_x-player_x < -16)
 			{
@@ -79,7 +79,7 @@ void updateEnemies()
 				*entity_write_addr = 0;
 			}
 		}
-		else if(enemy_type == 3)
+		else if(enemy_active && enemy_type == 3)
 		{
 			if( (((player_x + 32) > enemy_x) && (player_x < enemy_x)) || ((player_x < (enemy_x + 32)) && ((player_x +32) > (enemy_x + 32) )))
 			{

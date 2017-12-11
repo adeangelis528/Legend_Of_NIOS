@@ -21,9 +21,12 @@ module Player(input logic Reset, frame_clk, Clk,
     
 	 //level data is used for collision detection.
 	 logic [9:0] test_x, test_y;
-	 logic is_wall, wall_flag;
+	 logic is_wall_UR, is_wall_UL, is_wall_BR, is_wall_BL, wall_flag;
 	 logic attack_next;
-	 level_rom leveldata(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall));
+	 level_rom leveldata1(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall_UL));
+	 level_rom leveldata2(.DrawX(test_x + 31), .DrawY(test_y), .room, .bg_type(is_wall_UR));
+	 level_rom leveldata3(.DrawX(test_x), .DrawY(test_y + 31), .room, .bg_type(is_wall_BL));
+	 level_rom leveldata4(.DrawX(test_x + 31), .DrawY(test_y + 31), .room, .bg_type(is_wall_BR));
 	 
 	 logic[2:0] doorcode_in;
     /* Since the multiplicants are required to be signed, we have to first cast them
@@ -83,6 +86,11 @@ module Player(input logic Reset, frame_clk, Clk,
 		  test_y = Player_Y_Pos_in;
 		  wall_flag = 0;
 		  
+		  if(is_wall_BL|is_wall_BR|is_wall_UL|is_wall_UR)
+		  begin
+				wall_flag = 1;
+		  end
+		  
     
         // By default, keep motion unchanged
         Player_X_Motion_in = 0;
@@ -110,18 +118,10 @@ module Player(input logic Reset, frame_clk, Clk,
 				end*/
 				Player_X_Motion_in = ~(Player_X_Step) + 1'b1;
 				Player_Y_Motion_in = 0;
-				
-				if(is_wall)
-					wall_flag = 1;
-				test_y = test_y + 32;
-				if(is_wall)
-					wall_flag = 1;
-				if(wall_flag)
-					Player_X_Motion_in = 1'b1;
-				
 		  end
 		  else if(keycode == 7)
 		  begin
+				/*
 				//Test upper right corner
 				test_x = test_x + 32;
 				if(!is_wall) begin
@@ -140,9 +140,13 @@ module Player(input logic Reset, frame_clk, Clk,
 					Player_X_Motion_in = ~(10'b1) + 1'b1;
 					Player_Y_Motion_in = 0;
 				end
+				*/
+				Player_X_Motion_in = Player_X_Step;
+				Player_Y_Motion_in = 0;
 		  end
 		  else if(keycode == 22)
 		  begin
+			/*
 				//Test bottom left corner
 				test_y = test_y + 32;
 				if(!is_wall) begin
@@ -161,9 +165,13 @@ module Player(input logic Reset, frame_clk, Clk,
 					Player_Y_Motion_in = ~(10'b1) + 1'b1;
 					Player_X_Motion_in = 0;
 				end
+				*/
+				Player_Y_Motion_in = Player_Y_Step;
+				Player_X_Motion_in = 0;
 		  end
 		  else if(keycode == 26)
 		  begin
+				/*
 				//Test upper left corner
 				if(!is_wall) begin
 					//Test upper right corner
@@ -181,36 +189,48 @@ module Player(input logic Reset, frame_clk, Clk,
 					Player_Y_Motion_in = 1'b1;
 					Player_X_Motion_in = 0;
 				end
+				*/
+				Player_Y_Motion_in = ~(Player_Y_Step) + 1'b1;
+				Player_X_Motion_in = 0;
+				
 		  end
 		  
 		  else if(keycode == 44)
 				attack_next = 1;
+				
+		  
  
 		  
 		  //Wraparound logic
-		  if(Player_Y < 32)
+		  if(Player_Y_Pos_in < 32)
 		  begin
 				doorcode_in = 3;
 				Player_Y_Pos_in = 447;
 		  end
 		  
-		  else if(Player_Y > 447)
+		  else if(Player_Y_Pos_in > 447)
 		  begin
 				doorcode_in = 4;
 				Player_Y_Pos_in = 32;
 		  end
 		  
-		  else if(Player_X == 0 | Player_X >= 700)
+		  else if(Player_X_Pos_in == 0 | Player_X_Pos_in >= 700)
 		  begin
 				doorcode_in = 2;
 				Player_X_Pos_in = 607;
 		  end
 		  
-		  else if(Player_X > 607 & Player_X < 700)
+		  else if(Player_X_Pos_in > 607 & Player_X_Pos_in < 700)
 		  begin
 				doorcode_in = 1;
 				Player_X_Pos_in = 1;
 		  end
+		  else if(wall_flag)
+		  begin
+				Player_X_Pos_in = Player_X;
+				Player_Y_Pos_in = Player_Y;
+		  end
+		  
     end	
 	
 	
