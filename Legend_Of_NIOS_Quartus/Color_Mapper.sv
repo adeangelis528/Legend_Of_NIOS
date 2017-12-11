@@ -17,7 +17,8 @@
 module  color_mapper ( //input              is_ball,            // Whether current pixel belongs to ball 
                                                               //   or background (computed in ball.sv)
                        input        [9:0] DrawX, DrawY,       // Current pixel coordinates
-							  input			[9:0] Player_X, Player_Y, Enemy1_X, Enemy1_Y,
+							  input			[9:0] Player_X, Player_Y, Enemy1_X, Enemy1_Y, Enemy2_X, Enemy2_Y,
+														Enemy3_X, Enemy3_Y, Enemy4_X, Enemy4_Y, Enemy5_X, Enemy5_Y,
 							  input logic	[7:0]	bg_r, bg_g, bg_b,
 							  input logic	[10:0] font_addr,
 							  input logic	[3:0] text_offset,
@@ -36,7 +37,7 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 	 
 	 //Player Character
 	 logic pc_on;
-	 logic enemy1_on;
+	 logic enemy1_on, enemy2_on, enemy3_on, enemy4_on, enemy5_on;
 	 
 	 logic[10:0] pc_x;
 	 logic[10:0] pc_y;
@@ -54,10 +55,15 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 	 logic[31:0] sprite_data;
 	 sprite_rom sprites(.addr(sprite_addr), .data(sprite_data));
 	 
+	 //Render sprites on screen
     always_comb
     begin:Ball_on_proc
 			pc_on = 0;
 			enemy1_on = 0;
+			enemy2_on = 0;
+			enemy3_on = 0;
+			enemy4_on = 0;
+			enemy5_on = 0;
 			sprite_addr = 0;
 			
 			//Check for player
@@ -70,6 +76,30 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 			if(DrawX >= Enemy1_X && DrawY >= Enemy1_Y && DrawX < Enemy1_X + 32 && DrawY < Enemy1_Y + 32) begin
 				sprite_addr = (DrawY - Enemy1_Y + 64); //TODO change to enemy sprite
 				enemy1_on = 1;
+			end
+			
+			//Check for enemy2
+			if(DrawX >= Enemy2_X && DrawY >= Enemy2_Y && DrawX < Enemy2_X + 32 && DrawY < Enemy2_Y + 32) begin
+				sprite_addr = (DrawY - Enemy2_Y + 64); //TODO change to enemy sprite
+				enemy2_on = 1;
+			end
+			
+			//Check for enemy3
+			if(DrawX >= Enemy3_X && DrawY >= Enemy3_Y && DrawX < Enemy3_X + 32 && DrawY < Enemy3_Y + 32) begin
+				sprite_addr = (DrawY - Enemy3_Y + 64); //TODO change to enemy sprite
+				enemy3_on = 1;
+			end
+			
+			//Check for enemy4
+			if(DrawX >= Enemy4_X && DrawY >= Enemy4_Y && DrawX < Enemy4_X + 32 && DrawY < Enemy4_Y + 32) begin
+				sprite_addr = (DrawY - Enemy4_Y + 64); //TODO change to enemy sprite
+				enemy4_on = 1;
+			end
+			
+			//Check for enemy5
+			if(DrawX >= Enemy5_X && DrawY >= Enemy5_Y && DrawX < Enemy5_X + 32 && DrawY < Enemy5_Y + 32) begin
+				sprite_addr = (DrawY - Enemy5_Y + 64); //TODO change to enemy sprite
+				enemy5_on = 1;
 			end
     end
 	 
@@ -91,6 +121,34 @@ module  color_mapper ( //input              is_ball,            // Whether curre
 		
 		//Draw Enemy 1
 		else if(enemy1_on && sprite_data[DrawX - Enemy1_X]) begin
+			Red = 8'hff;
+			Green = 8'hff;
+			Blue = 8'hff;
+		end
+		
+		//Draw Enemy 2
+		else if(enemy2_on && sprite_data[DrawX - Enemy2_X]) begin
+			Red = 8'hff;
+			Green = 8'hff;
+			Blue = 8'hff;
+		end
+		
+		//Draw Enemy 3
+		else if(enemy3_on && sprite_data[DrawX - Enemy3_X]) begin
+			Red = 8'hff;
+			Green = 8'hff;
+			Blue = 8'hff;
+		end
+		
+		//Draw Enemy 4
+		else if(enemy4_on && sprite_data[DrawX - Enemy4_X]) begin
+			Red = 8'hff;
+			Green = 8'hff;
+			Blue = 8'hff;
+		end
+		
+		//Draw Enemy 5
+		else if(enemy5_on && sprite_data[DrawX - Enemy5_X]) begin
 			Red = 8'hff;
 			Green = 8'hff;
 			Blue = 8'hff;

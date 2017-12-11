@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys_0' in SOPC Builder design 'nios_system'
  * SOPC Builder design path: ../../nios_system.sopcinfo
  *
- * Generated: Sun Dec 10 00:59:49 CST 2017
+ * Generated: Sun Dec 10 21:54:40 CST 2017
  */
 
 /*
@@ -158,19 +158,19 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart_0"
-#define ALT_STDERR_BASE 0x110
+#define ALT_STDERR_BASE 0x120
 #define ALT_STDERR_DEV jtag_uart_0
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart_0"
-#define ALT_STDIN_BASE 0x110
+#define ALT_STDIN_BASE 0x120
 #define ALT_STDIN_DEV jtag_uart_0
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart_0"
-#define ALT_STDOUT_BASE 0x110
+#define ALT_STDOUT_BASE 0x120
 #define ALT_STDOUT_DEV jtag_uart_0
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
@@ -215,7 +215,7 @@
 #define ENTITY_DIR_BIT_CLEARING_EDGE_REGISTER 0
 #define ENTITY_DIR_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define ENTITY_DIR_CAPTURE 0
-#define ENTITY_DIR_DATA_WIDTH 2
+#define ENTITY_DIR_DATA_WIDTH 3
 #define ENTITY_DIR_DO_TEST_BENCH_WIRING 0
 #define ENTITY_DIR_DRIVEN_SIM_VALUE 0
 #define ENTITY_DIR_EDGE_TYPE "NONE"
@@ -284,6 +284,33 @@
 #define ENTITY_SELECT_RESET_VALUE 0
 #define ENTITY_SELECT_SPAN 16
 #define ENTITY_SELECT_TYPE "altera_avalon_pio"
+
+
+/*
+ * entity_type configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_entity_type altera_avalon_pio
+#define ENTITY_TYPE_BASE 0xf0
+#define ENTITY_TYPE_BIT_CLEARING_EDGE_REGISTER 0
+#define ENTITY_TYPE_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define ENTITY_TYPE_CAPTURE 0
+#define ENTITY_TYPE_DATA_WIDTH 2
+#define ENTITY_TYPE_DO_TEST_BENCH_WIRING 0
+#define ENTITY_TYPE_DRIVEN_SIM_VALUE 0
+#define ENTITY_TYPE_EDGE_TYPE "NONE"
+#define ENTITY_TYPE_FREQ 50000000
+#define ENTITY_TYPE_HAS_IN 1
+#define ENTITY_TYPE_HAS_OUT 0
+#define ENTITY_TYPE_HAS_TRI 0
+#define ENTITY_TYPE_IRQ -1
+#define ENTITY_TYPE_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ENTITY_TYPE_IRQ_TYPE "NONE"
+#define ENTITY_TYPE_NAME "/dev/entity_type"
+#define ENTITY_TYPE_RESET_VALUE 0
+#define ENTITY_TYPE_SPAN 16
+#define ENTITY_TYPE_TYPE "altera_avalon_pio"
 
 
 /*
@@ -383,7 +410,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart_0 altera_avalon_jtag_uart
-#define JTAG_UART_0_BASE 0x110
+#define JTAG_UART_0_BASE 0x120
 #define JTAG_UART_0_IRQ 5
 #define JTAG_UART_0_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_0_NAME "/dev/jtag_uart_0"
@@ -631,7 +658,7 @@
  */
 
 #define ALT_MODULE_CLASS_sdram_pll altpll
-#define SDRAM_PLL_BASE 0xf0
+#define SDRAM_PLL_BASE 0x100
 #define SDRAM_PLL_IRQ -1
 #define SDRAM_PLL_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SDRAM_PLL_NAME "/dev/sdram_pll"
@@ -645,13 +672,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid_qsys_0 altera_avalon_sysid_qsys
-#define SYSID_QSYS_0_BASE 0x108
+#define SYSID_QSYS_0_BASE 0x118
 #define SYSID_QSYS_0_ID 0
 #define SYSID_QSYS_0_IRQ -1
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1512863698
+#define SYSID_QSYS_0_TIMESTAMP 1512962994
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 #endif /* __SYSTEM_H_ */

@@ -77,7 +77,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  29 .quartus_project_dir 00000046  00000000  00000000  0006f1da  2**0
                   CONTENTS, READONLY
- 30 .sopcinfo     00097b10  00000000  00000000  0006f220  2**0
+ 30 .sopcinfo     0009dbd3  00000000  00000000  0006f220  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 10000000 l    d  .entry	00000000 .entry
@@ -931,7 +931,7 @@ void updateEnemies()
 		*entity_read_addr = 0;
 10000288:	00801c04 	movi	r2,112
 1000028c:	10000015 	stw	zero,0(r2)
-		if(enemy_active && (enemyCounter[i-1] > 400))
+		if(enemy_active && enemyCounter[i-1] >= 3)
 10000290:	e0bffe17 	ldw	r2,-8(fp)
 10000294:	10002926 	beq	r2,zero,1000033c <updateEnemies+0x144>
 10000298:	e0bff917 	ldw	r2,-28(fp)
@@ -942,10 +942,10 @@ void updateEnemies()
 100002ac:	18c7883a 	add	r3,r3,r3
 100002b0:	10c5883a 	add	r2,r2,r3
 100002b4:	10800017 	ldw	r2,0(r2)
-100002b8:	10806450 	cmplti	r2,r2,401
+100002b8:	108000d0 	cmplti	r2,r2,3
 100002bc:	10001f1e 	bne	r2,zero,1000033c <updateEnemies+0x144>
 		{
-			int dir = rand() % 4;
+			int dir = rand() % 4 + 1;
 100002c0:	00024980 	call	10002498 <rand>
 100002c4:	1007883a 	mov	r3,r2
 100002c8:	00a00034 	movhi	r2,32768
@@ -956,31 +956,31 @@ void updateEnemies()
 100002dc:	00ffff04 	movi	r3,-4
 100002e0:	10c4b03a 	or	r2,r2,r3
 100002e4:	10800044 	addi	r2,r2,1
-100002e8:	e0bfff15 	stw	r2,-4(fp)
+100002e8:	10800044 	addi	r2,r2,1
+100002ec:	e0bfff15 	stw	r2,-4(fp)
 			*entity_write_addr = 1;
-100002ec:	00801804 	movi	r2,96
-100002f0:	00c00044 	movi	r3,1
-100002f4:	10c00015 	stw	r3,0(r2)
+100002f0:	00801804 	movi	r2,96
+100002f4:	00c00044 	movi	r3,1
+100002f8:	10c00015 	stw	r3,0(r2)
 			*entity_dir_addr = dir;
-100002f8:	00801404 	movi	r2,80
-100002fc:	e0ffff17 	ldw	r3,-4(fp)
-10000300:	10c00015 	stw	r3,0(r2)
+100002fc:	00801404 	movi	r2,80
+10000300:	e0ffff17 	ldw	r3,-4(fp)
+10000304:	10c00015 	stw	r3,0(r2)
 			*entity_write_addr = 0;
-10000304:	00801804 	movi	r2,96
-10000308:	10000015 	stw	zero,0(r2)
+10000308:	00801804 	movi	r2,96
+1000030c:	10000015 	stw	zero,0(r2)
 			enemyCounter[i-1] = 0;
-1000030c:	e0bff917 	ldw	r2,-28(fp)
-10000310:	10ffffc4 	addi	r3,r2,-1
-10000314:	00840074 	movhi	r2,4097
-10000318:	1095c804 	addi	r2,r2,22304
-1000031c:	18c7883a 	add	r3,r3,r3
+10000310:	e0bff917 	ldw	r2,-28(fp)
+10000314:	10ffffc4 	addi	r3,r2,-1
+10000318:	00840074 	movhi	r2,4097
+1000031c:	1095c804 	addi	r2,r2,22304
 10000320:	18c7883a 	add	r3,r3,r3
-10000324:	10c5883a 	add	r2,r2,r3
-10000328:	10000015 	stw	zero,0(r2)
-			printf("\nEnemy provided code: %04x\n",dir);
-1000032c:	01040074 	movhi	r4,4097
-10000330:	21059f04 	addi	r4,r4,5756
-10000334:	e17fff17 	ldw	r5,-4(fp)
+10000324:	18c7883a 	add	r3,r3,r3
+10000328:	10c5883a 	add	r2,r2,r3
+1000032c:	10000015 	stw	zero,0(r2)
+			printf("\nEnemy direction changed");
+10000330:	01040074 	movhi	r4,4097
+10000334:	21059f04 	addi	r4,r4,5756
 10000338:	00023780 	call	10002378 <printf>
 		}
 		enemyCounter[i-1] ++;
@@ -1011,7 +1011,7 @@ void updateEnemies()
 10000384:	e0bff917 	ldw	r2,-28(fp)
 10000388:	10800190 	cmplti	r2,r2,6
 1000038c:	103faf1e 	bne	r2,zero,1000024c <__alt_data_end+0xf800024c>
-			printf("\nEnemy provided code: %04x\n",dir);
+			printf("\nEnemy direction changed");
 		}
 		enemyCounter[i-1] ++;
 	}
@@ -21825,7 +21825,7 @@ int alt_get_fd (alt_dev* dev)
 1001141c:	d9400015 	stw	r5,0(sp)
 10011420:	d9800115 	stw	r6,4(sp)
 10011424:	d9c00215 	stw	r7,8(sp)
-10011428:	00000000 	call	10000000 <__alt_mem_sdram>
+10011428:	00000000 	call	10000000 <__reset>
 1001142c:	d9400017 	ldw	r5,0(sp)
 10011430:	d9800117 	ldw	r6,4(sp)
 10011434:	d9c00217 	ldw	r7,8(sp)
@@ -21911,7 +21911,7 @@ int alt_get_fd (alt_dev* dev)
 1001156c:	10003426 	beq	r2,zero,10011640 <__call_exitprocs+0x18c>
 10011570:	9809883a 	mov	r4,r19
 10011574:	a8800015 	stw	r2,0(r21)
-10011578:	00000000 	call	10000000 <__alt_mem_sdram>
+10011578:	00000000 	call	10000000 <__reset>
 1001157c:	acc00017 	ldw	r19,0(r21)
 10011580:	983fe41e 	bne	r19,zero,10011514 <__alt_data_end+0xf8011514>
 10011584:	dfc00b17 	ldw	ra,44(sp)

@@ -1,18 +1,20 @@
 module EntityInterface(input logic[2:0] select,
 							  input logic clk,
 							  input logic read, write,
-							  input logic[1:0] sel_dir,
+							  input logic[2:0] sel_dir,
+							  input logic[1:0] Type_E1, Type_E2, Type_E3, Type_E4, Type_E5,
 							  input logic[9:0] Enemy1_X, Enemy2_X, Enemy3_X, Enemy4_X, Enemy5_X, Player_X,
 							  input logic[9:0] Enemy1_Y, Enemy2_Y, Enemy3_Y, Enemy4_Y, Enemy5_Y, Player_Y,
 							  input logic Enemy1_Active, Enemy2_Active, Enemy3_Active, Enemy4_Active, Enemy5_Active,
 							  output logic[9:0] toNIOS_X, toNIOS_Y,
-							  output logic[1:0] toEnemy1_dir, toEnemy2_dir, toEnemy3_dir, toEnemy4_dir, toEnemy5_dir,
+							  output logic[2:0] toEnemy1_dir, toEnemy2_dir, toEnemy3_dir, toEnemy4_dir, toEnemy5_dir,
+							  output logic[1:0] toNIOS_Type,
 							  output logic toNIOS_Active);
 			
 
 				logic[9:0] X_Out, Y_Out;
-				
-				logic[1:0] Enemy1_dir_in, Enemy2_dir_in, Enemy3_dir_in, Enemy4_dir_in, Enemy5_dir_in;
+				logic[1:0] Type_Out;
+				logic[2:0] Enemy1_dir_in, Enemy2_dir_in, Enemy3_dir_in, Enemy4_dir_in, Enemy5_dir_in;
 	always_ff @ (posedge clk)
 	begin
 		toEnemy1_dir<=Enemy1_dir_in;
@@ -23,6 +25,7 @@ module EntityInterface(input logic[2:0] select,
 	
 		toNIOS_X <= X_Out;
 		toNIOS_Y <= Y_Out;
+		toNIOS_Type <= Type_Out;
 	
 	end
 	
@@ -30,6 +33,7 @@ module EntityInterface(input logic[2:0] select,
 		toNIOS_Active = 0;
 		X_Out = 0;
 		Y_Out = 0;
+		Type_Out = 0;
 	
 		Enemy1_dir_in = toEnemy1_dir;
 		Enemy2_dir_in = toEnemy2_dir;
@@ -52,31 +56,37 @@ module EntityInterface(input logic[2:0] select,
 				0 : begin
 					 X_Out = Player_X;
 					 Y_Out = Player_Y;
+					 Type_Out = 0;
 					 end
 				1 : begin
 					 X_Out = Enemy1_X;
 					 Y_Out = Enemy1_Y;
 					 toNIOS_Active = Enemy1_Active;
+					 Type_Out = Type_E1;
 					 end
 				2 : begin
 					 X_Out = Enemy2_X;
 					 Y_Out = Enemy2_Y;
 					 toNIOS_Active = Enemy2_Active;
+					 Type_Out = Type_E2;
 					 end
 				3 : begin
 					 X_Out = Enemy3_X;
 					 Y_Out = Enemy3_Y;
 					 toNIOS_Active = Enemy3_Active;
+					 Type_Out = Type_E3;
 					 end
 				4 : begin
 					 X_Out = Enemy4_X;
 					 Y_Out = Enemy4_Y;
 					 toNIOS_Active = Enemy4_Active;
+					 Type_Out = Type_E4;
 					 end
 				5 : begin
 					 X_Out = Enemy5_X;
 					 Y_Out = Enemy5_Y;
 					 toNIOS_Active = Enemy5_Active;
+					 Type_Out = Type_E5;
 					 end
 			endcase		
 		end

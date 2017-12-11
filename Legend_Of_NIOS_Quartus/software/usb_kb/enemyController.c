@@ -32,14 +32,14 @@ void updateEnemies()
 		int enemy_y = *entity_y_addr;
 		int enemy_active = *entity_active_addr;
 		*entity_read_addr = 0;
-		if(enemy_active && (enemyCounter[i-1] > 400))
+		if(enemy_active && enemyCounter[i-1] >= 3)
 		{
-			int dir = rand() % 4;
+			int dir = rand() % 4 + 1;
 			*entity_write_addr = 1;
 			*entity_dir_addr = dir;
 			*entity_write_addr = 0;
 			enemyCounter[i-1] = 0;
-			printf("\nEnemy provided code: %04x\n",dir);
+			printf("\nEnemy direction changed");
 		}
 		enemyCounter[i-1] ++;
 	}

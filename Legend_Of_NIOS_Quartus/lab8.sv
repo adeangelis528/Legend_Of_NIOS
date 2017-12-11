@@ -105,7 +105,8 @@ module lab8( input               CLOCK_50,
 									  .entity_select_export(select),
 									  .entity_write_export(write),
 									  .entity_x_export(toNIOS_X),
-									  .entity_y_export(toNIOS_Y)
+									  .entity_y_export(toNIOS_Y),
+									  .entity_type_export(toNIOS_Type)
     );
   
     // Use PLL to generate the 25MHZ VGA_CLK. Do not modify it.
@@ -140,31 +141,40 @@ module lab8( input               CLOCK_50,
 	 //assign room = 0;
 	 //assign bg_type = 0;
 	   logic[2:0] select;
-	   logic read, write;
-	   logic[1:0] sel_dir;
+	   logic read, write, initialize;
+	   logic[2:0] sel_dir;
 	   logic[9:0] Enemy1_X, Enemy2_X, Enemy3_X, Enemy4_X, Enemy5_X;
 	   logic[9:0] Enemy1_Y, Enemy2_Y, Enemy3_Y, Enemy4_Y, Enemy5_Y;
 	   logic Enemy1_Active, Enemy2_Active, Enemy3_Active, Enemy4_Active, Enemy5_Active;
+		logic Damage_E1, Damage_E2, Damage_E3, Damage_E4, Damage_E5;
+		logic[1:0] Type_E1, Type_E2, Type_E3, Type_E4, Type_E5;
 	   logic[9:0] toNIOS_X, toNIOS_Y;
-	   logic[1:0] toEnemy1_dir, toEnemy2_dir, toEnemy3_dir, toEnemy4_dir, toEnemy5_dir;
+		logic[1:0] toNIOS_Type;
+	   logic[2:0] toEnemy1_dir, toEnemy2_dir, toEnemy3_dir, toEnemy4_dir, toEnemy5_dir;
 	   logic toNIOS_Active;
+		logic game_over, player_attack, game_reset;
+		
+		assign game_reset = game_over | Reset_h;
 	 
 	 
 	 //Game state
-	 GameState gamedata(.Clk, .Reset(Reset_h), .Frame_clk(VGA_VS), .Player_X, .Player_Y,
-								.health, .score1, .score2);
+	 GameState gamedata(.Clk, .Reset(Reset_h), .Frame_clk(VGA_VS), .Player_Attack(player_attack), .Player_X, .Player_Y, .Enemy1_X, .Enemy1_Y,
+							  .Enemy2_X, .Enemy2_Y, .Enemy3_X, .Enemy3_Y, .Enemy4_X, .Enemy4_Y, .Enemy5_X, .Enemy5_Y,
+							  .Damage_E1, .Damage_E2, .Damage_E3, .Damage_E4, .Damage_E5, 
+								.health, .score1, .score2, .game_over);
 	
 	 EntityInterface entities(.select, .clk(Clk), .read, .write, .sel_dir,
 										.Enemy1_X, .Enemy2_X, .Enemy3_X, .Enemy4_X, .Enemy5_X, .Player_X,
 										.Enemy1_Y, .Enemy2_Y, .Enemy3_Y, .Enemy4_Y, .Enemy5_Y, .Player_Y,
 										.Enemy1_Active, .Enemy2_Active, .Enemy3_Active, .Enemy4_Active, .Enemy5_Active,
-										.toNIOS_X, .toNIOS_Y,
+										.Type_E1, .Type_E2, .Type_E3, .Type_E4, .Type_E5,
+										.toNIOS_X, .toNIOS_Y, .toNIOS_Type,
 										.toEnemy1_dir, .toEnemy2_dir, .toEnemy3_dir, .toEnemy4_dir, .toEnemy5_dir,
 										.toNIOS_Active);
 	 
 	 //Level Data
 	 level_rom level_instance(.DrawX, .DrawY, .room, .bg_type);
-	 RoomState room_logic(.doorcode, .vsync(VGA_VS), .room);
+	 RoomState room_logic(.doorcode, .vsync(VGA_VS), .Reset(game_reset), .room, .initialize_room(initialize));
 	 
 	 //Draw modules
 	 Background bg(.Red(bg_r), .Green(bg_g), .Blue(bg_b), 
@@ -173,11 +183,24 @@ module lab8( input               CLOCK_50,
 	 TextDisplay text(.DrawX, .DrawY, .is_drawn(draw_text), .score1, .score2, .health,
 							.addr(font_addr), .offset(text_offset));
 							
-	 Player player_instance(.Clk, .Reset(Reset_h), .frame_clk(VGA_VS), .room, .doorcode,
-									.keycode(keycode[7:0]), .Player_X, .Player_Y);
+	 Player player_instance(.Clk, .Reset(game_reset), .frame_clk(VGA_VS), .room, .doorcode,
+									.keycode(keycode[7:0]), .Player_X, .Player_Y, .attack(player_attack));
 	 
-	 Enemy enemy1(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .dir(toEnemy1_dir), .room, 
-						.Enemy_X(Enemy1_X), .Enemy_Y(Enemy1_Y), .active(Enemy1_Active));
+	 //Five enemies
+	 Enemy enemy1(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E1), .initialize, .dir(toEnemy1_dir), .room, .number(3'b001),
+						.Enemy_X(Enemy1_X), .Enemy_Y(Enemy1_Y), .active(Enemy1_Active), .Enemy_Type(Type_E1));
+						
+	 Enemy enemy2(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E2), .initialize, .dir(toEnemy2_dir), .room, .number(3'b010),
+						.Enemy_X(Enemy2_X), .Enemy_Y(Enemy2_Y), .active(Enemy2_Active), .Enemy_Type(Type_E2));
+						
+	 Enemy enemy3(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E3), .initialize, .dir(toEnemy3_dir), .room, .number(3'b011),
+						.Enemy_X(Enemy3_X), .Enemy_Y(Enemy3_Y), .active(Enemy3_Active), .Enemy_Type(Type_E3));
+						
+	 Enemy enemy4(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E4), .initialize, .dir(toEnemy4_dir), .room, .number(3'b100),
+						.Enemy_X(Enemy4_X), .Enemy_Y(Enemy4_Y), .active(Enemy4_Active), .Enemy_Type(Type_E4));
+						
+	 Enemy enemy5(.Reset(Reset_h), .frame_clk(VGA_VS), .Clk, .damage(Damage_E5), .initialize, .dir(toEnemy5_dir), .room, .number(3'b101),
+						.Enemy_X(Enemy5_X), .Enemy_Y(Enemy5_Y), .active(Enemy5_Active), .Enemy_Type(Type_E5));
 	 
 	 //Interface modules
     VGA_controller vga_controller_instance(.Clk, 
@@ -195,6 +218,10 @@ module lab8( input               CLOCK_50,
 										  .DrawY,
 										  .Player_X, .Player_Y,
 										  .Enemy1_X, .Enemy1_Y,
+										  .Enemy2_X, .Enemy2_Y,
+										  .Enemy3_X, .Enemy3_Y,
+										  .Enemy4_X, .Enemy4_Y,
+										  .Enemy5_X, .Enemy5_Y,
 										  .bg_r, .bg_g, .bg_b,
 										  .font_addr, .text_offset, .draw_text,
 										  .VGA_R,

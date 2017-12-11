@@ -40,6 +40,11 @@
    }
    element entity_active.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "32";
@@ -56,6 +61,11 @@
    }
    element entity_dir.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "80";
@@ -72,6 +82,11 @@
    }
    element entity_read.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "112";
@@ -88,9 +103,30 @@
    }
    element entity_select.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "128";
+         type = "String";
+      }
+   }
+   element entity_type
+   {
+      datum _sortIndex
+      {
+         value = "20";
+         type = "int";
+      }
+   }
+   element entity_type.s1
+   {
+      datum baseAddress
+      {
+         value = "240";
          type = "String";
       }
    }
@@ -104,6 +140,11 @@
    }
    element entity_write.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "96";
@@ -120,6 +161,11 @@
    }
    element entity_x.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "64";
@@ -136,6 +182,11 @@
    }
    element entity_y.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "48";
@@ -154,7 +205,7 @@
    {
       datum baseAddress
       {
-         value = "272";
+         value = "288";
          type = "String";
       }
    }
@@ -168,6 +219,11 @@
    }
    element keycode.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "224";
@@ -226,6 +282,11 @@
    }
    element otg_hpi_address.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "192";
@@ -242,6 +303,11 @@
    }
    element otg_hpi_cs.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "208";
@@ -258,6 +324,11 @@
    }
    element otg_hpi_data.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "176";
@@ -274,6 +345,11 @@
    }
    element otg_hpi_r.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "160";
@@ -290,6 +366,11 @@
    }
    element otg_hpi_w.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "144";
@@ -334,7 +415,7 @@
    {
       datum baseAddress
       {
-         value = "240";
+         value = "256";
          type = "String";
       }
    }
@@ -355,7 +436,7 @@
    {
       datum baseAddress
       {
-         value = "264";
+         value = "280";
          type = "String";
       }
    }
@@ -399,6 +480,11 @@
  <interface
    name="entity_select"
    internal="entity_select.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="entity_type"
+   internal="entity_type.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -485,7 +571,7 @@
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="2" />
+  <parameter name="width" value="3" />
  </module>
  <module
    name="entity_read"
@@ -522,6 +608,24 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="3" />
+ </module>
+ <module
+   name="entity_type"
+   kind="altera_avalon_pio"
+   version="15.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="2" />
  </module>
  <module
    name="entity_write"
@@ -626,7 +730,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x10' /><slave name='entity_active.s1' start='0x20' end='0x30' /><slave name='entity_y.s1' start='0x30' end='0x40' /><slave name='entity_x.s1' start='0x40' end='0x50' /><slave name='entity_dir.s1' start='0x50' end='0x60' /><slave name='entity_write.s1' start='0x60' end='0x70' /><slave name='entity_read.s1' start='0x70' end='0x80' /><slave name='entity_select.s1' start='0x80' end='0x90' /><slave name='otg_hpi_w.s1' start='0x90' end='0xA0' /><slave name='otg_hpi_r.s1' start='0xA0' end='0xB0' /><slave name='otg_hpi_data.s1' start='0xB0' end='0xC0' /><slave name='otg_hpi_address.s1' start='0xC0' end='0xD0' /><slave name='otg_hpi_cs.s1' start='0xD0' end='0xE0' /><slave name='keycode.s1' start='0xE0' end='0xF0' /><slave name='sdram_pll.pll_slave' start='0xF0' end='0x100' /><slave name='sysid_qsys_0.control_slave' start='0x108' end='0x110' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x110' end='0x118' /><slave name='nios2_qsys_0.debug_mem_slave' start='0x1000' end='0x1800' /><slave name='sdram.s1' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x10' /><slave name='entity_active.s1' start='0x20' end='0x30' /><slave name='entity_y.s1' start='0x30' end='0x40' /><slave name='entity_x.s1' start='0x40' end='0x50' /><slave name='entity_dir.s1' start='0x50' end='0x60' /><slave name='entity_write.s1' start='0x60' end='0x70' /><slave name='entity_read.s1' start='0x70' end='0x80' /><slave name='entity_select.s1' start='0x80' end='0x90' /><slave name='otg_hpi_w.s1' start='0x90' end='0xA0' /><slave name='otg_hpi_r.s1' start='0xA0' end='0xB0' /><slave name='otg_hpi_data.s1' start='0xB0' end='0xC0' /><slave name='otg_hpi_address.s1' start='0xC0' end='0xD0' /><slave name='otg_hpi_cs.s1' start='0xD0' end='0xE0' /><slave name='keycode.s1' start='0xE0' end='0xF0' /><slave name='entity_type.s1' start='0xF0' end='0x100' /><slave name='sdram_pll.pll_slave' start='0x100' end='0x110' /><slave name='sysid_qsys_0.control_slave' start='0x118' end='0x120' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x120' end='0x128' /><slave name='nios2_qsys_0.debug_mem_slave' start='0x1000' end='0x1800' /><slave name='sdram.s1' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -665,7 +769,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Tiny" />
   <parameter name="instAddrWidth" value="29" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x10' /><slave name='sdram_pll.pll_slave' start='0xF0' end='0x100' /><slave name='sysid_qsys_0.control_slave' start='0x108' end='0x110' /><slave name='nios2_qsys_0.debug_mem_slave' start='0x1000' end='0x1800' /><slave name='sdram.s1' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x10' /><slave name='sdram_pll.pll_slave' start='0x100' end='0x110' /><slave name='sysid_qsys_0.control_slave' start='0x118' end='0x120' /><slave name='nios2_qsys_0.debug_mem_slave' start='0x1000' end='0x1800' /><slave name='sdram.s1' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1099,7 +1203,7 @@
    start="nios2_qsys_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0110" />
+  <parameter name="baseAddress" value="0x0120" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1108,7 +1212,7 @@
    start="nios2_qsys_0.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0108" />
+  <parameter name="baseAddress" value="0x0118" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1126,7 +1230,7 @@
    start="nios2_qsys_0.data_master"
    end="sdram_pll.pll_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00f0" />
+  <parameter name="baseAddress" value="0x0100" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1267,10 +1371,19 @@
  <connection
    kind="avalon"
    version="15.0"
+   start="nios2_qsys_0.data_master"
+   end="entity_type.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00f0" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
    start="nios2_qsys_0.instruction_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0108" />
+  <parameter name="baseAddress" value="0x0118" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1288,7 +1401,7 @@
    start="nios2_qsys_0.instruction_master"
    end="sdram_pll.pll_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00f0" />
+  <parameter name="baseAddress" value="0x0100" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1330,6 +1443,7 @@
  <connection kind="clock" version="15.0" start="clk_0.clk" end="entity_x.clk" />
  <connection kind="clock" version="15.0" start="clk_0.clk" end="entity_y.clk" />
  <connection kind="clock" version="15.0" start="clk_0.clk" end="entity_active.clk" />
+ <connection kind="clock" version="15.0" start="clk_0.clk" end="entity_type.clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -1437,6 +1551,11 @@
    kind="reset"
    version="15.0"
    start="clk_0.clk_reset"
+   end="entity_type.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
    end="onchip_memory2_0.reset1" />
  <connection
    kind="reset"
@@ -1503,6 +1622,11 @@
    version="15.0"
    start="nios2_qsys_0.debug_reset_request"
    end="entity_active.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="nios2_qsys_0.debug_reset_request"
+   end="entity_type.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

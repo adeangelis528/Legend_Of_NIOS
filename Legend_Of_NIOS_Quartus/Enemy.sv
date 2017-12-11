@@ -1,12 +1,13 @@
 module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
-				  input logic [1:0] dir,
-				  input logic [2:0] room,
+				  input logic [2:0] dir, 
+				  input logic [2:0] room, number,
 				  output logic[9:0] Enemy_X, Enemy_Y,
-				  output logic active);
+				  output logic active,
+				  output logic [1:0] Enemy_Type);
 
 	
     parameter [9:0] Enemy_X_Start=300;  // Start enemy offscreen
-    parameter [9:0] Enemy_Y_Start=200;  
+    parameter [9:0] Enemy_Y_Start=100;  
     parameter [9:0] Enemy_X_Step=2;      // Step size on the X axis
     parameter [9:0] Enemy_Y_Step=2;      // Step size on the Y axis
     
@@ -17,6 +18,8 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 	 logic [9:0] test_x, test_y;
 	 logic is_wall, wall_flag;
 	 level_rom leveldata(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall));
+	 logic active_next;
+	 logic [1:0] Type_next;
 	 
     /* Since the multiplicants are required to be signed, we have to first cast them
        from logic to int (signed by default) before they are multiplied. */
@@ -27,17 +30,22 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
 	 
 	 initial
 	 begin
-		Enemy_X = Enemy_X_Start;
-		Enemy_Y = Enemy_Y_Start;
+		Enemy_X = 700;
+		Enemy_Y = 700;
+		active_next = 0;
 	 end
 	 
     always_ff @ (posedge Clk) begin
         frame_clk_delayed <= frame_clk;
+		  active <= active_next;
+		  Enemy_Type <= Type_next;
     end
+	 
     assign frame_clk_rising_edge = (frame_clk == 1'b1) && (frame_clk_delayed == 1'b0);
     // Update ball position and motion
     always_ff @ (posedge Clk)
     begin
+	 
         if (Reset)
         begin
             Enemy_X <= Enemy_X_Start;
@@ -59,11 +67,11 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
     // You need to modify always_comb block.
     always_comb
     begin
-		  active = 1;
+        active_next = active;
+		  Type_next = Enemy_Type;
 		  
-        // Update the ball's position with its motion
-        Enemy_X_Pos_in = Enemy_X + Enemy_X_Motion;
-        Enemy_Y_Pos_in = Enemy_Y + Enemy_Y_Motion;
+		  if(damage)
+				active_next = 0;
 		  
 		  //For collision detection
 		  test_x = Enemy_X_Pos_in;
@@ -75,101 +83,399 @@ module Enemy(input logic Reset, frame_clk, Clk, damage, initialize,
         Enemy_X_Motion_in = 0;
         Enemy_Y_Motion_in = 0;
 		  
-		  //Character controls
-		  if(dir == 0)
-		  begin
-				/*//Test upper left corner
-				if(!is_wall) begin
-					//Test lower left corner
-					test_y = test_y + 32;
+		  if(active) begin
+			  //Character controls
+			  if(dir == 1)
+			  begin
+					/*//Test upper left corner
 					if(!is_wall) begin
-						Enemy_X_Motion_in = ~(Enemy_X_Step) + 1'b1;
-						Enemy_Y_Motion_in = 0;
+						//Test lower left corner
+						test_y = test_y + 32;
+						if(!is_wall) begin
+							Enemy_X_Motion_in = ~(Enemy_X_Step) + 1'b1;
+							Enemy_Y_Motion_in = 0;
+						end
+						else begin
+							Enemy_X_Motion_in = 1'b1;
+							Enemy_Y_Motion_in = 0;
+						end
 					end
 					else begin
 						Enemy_X_Motion_in = 1'b1;
 						Enemy_Y_Motion_in = 0;
-					end
-				end
-				else begin
-					Enemy_X_Motion_in = 1'b1;
+					end*/
+					Enemy_X_Motion_in = ~(Enemy_X_Step) + 1'b1;
 					Enemy_Y_Motion_in = 0;
-				end*/
-				Enemy_X_Motion_in = ~(Enemy_X_Step) + 1'b1;
-				Enemy_Y_Motion_in = 0;
-				
-				if(is_wall)
-					wall_flag = 1;
-				test_y = test_y + 32;
-				if(is_wall)
-					wall_flag = 1;
-				if(wall_flag)
-					Enemy_X_Motion_in = 1'b1;
-				
-		  end
-		  else if(dir == 1)
-		  begin
-				//Test upper right corner
-				test_x = test_x + 32;
-				if(!is_wall) begin
-					//Test lower right corner
+					
+					if(is_wall)
+						wall_flag = 1;
 					test_y = test_y + 32;
+					if(is_wall)
+						wall_flag = 1;
+					if(wall_flag)
+						Enemy_X_Motion_in = 1'b1;
+					
+			  end
+			  else if(dir == 2)
+			  begin
+					//Test upper right corner
+					test_x = test_x + 32;
 					if(!is_wall) begin
-						Enemy_X_Motion_in = Enemy_X_Step;
-						Enemy_Y_Motion_in = 0;
+						//Test lower right corner
+						test_y = test_y + 32;
+						if(!is_wall) begin
+							Enemy_X_Motion_in = Enemy_X_Step;
+							Enemy_Y_Motion_in = 0;
+						end
+						else begin
+							Enemy_X_Motion_in = ~(10'b1) + 1'b1;
+							Enemy_Y_Motion_in = 0;
+						end
 					end
 					else begin
 						Enemy_X_Motion_in = ~(10'b1) + 1'b1;
 						Enemy_Y_Motion_in = 0;
 					end
-				end
-				else begin
-					Enemy_X_Motion_in = ~(10'b1) + 1'b1;
-					Enemy_Y_Motion_in = 0;
-				end
-		  end
-		  else if(dir == 2)
-		  begin
-				//Test bottom left corner
-				test_y = test_y + 32;
-				if(!is_wall) begin
-					//Test lower right corner
-					test_x = test_x + 32;
+			  end
+			  else if(dir == 3)
+			  begin
+					//Test bottom left corner
+					test_y = test_y + 32;
 					if(!is_wall) begin
-						Enemy_Y_Motion_in = Enemy_Y_Step;
-						Enemy_X_Motion_in = 0;
+						//Test lower right corner
+						test_x = test_x + 32;
+						if(!is_wall) begin
+							Enemy_Y_Motion_in = Enemy_Y_Step;
+							Enemy_X_Motion_in = 0;
+						end
+						else begin
+							Enemy_Y_Motion_in = ~(10'b1) + 1'b1;
+							Enemy_X_Motion_in = 0;
+						end
 					end
 					else begin
 						Enemy_Y_Motion_in = ~(10'b1) + 1'b1;
 						Enemy_X_Motion_in = 0;
 					end
-				end
-				else begin
-					Enemy_Y_Motion_in = ~(10'b1) + 1'b1;
-					Enemy_X_Motion_in = 0;
-				end
-		  end
-		  else if(dir == 3)
-		  begin
-				//Test upper left corner
-				if(!is_wall) begin
-					//Test upper right corner
-					test_x = test_x + 32;
+			  end
+			  else if(dir == 4)
+			  begin
+					//Test upper left corner
 					if(!is_wall) begin
-						Enemy_Y_Motion_in = ~(Enemy_X_Step) + 1'b1;
-						Enemy_X_Motion_in = 0;
+						//Test upper right corner
+						test_x = test_x + 32;
+						if(!is_wall) begin
+							Enemy_Y_Motion_in = ~(Enemy_X_Step) + 1'b1;
+							Enemy_X_Motion_in = 0;
+						end
+						else begin
+							Enemy_Y_Motion_in = 1'b1;
+							Enemy_X_Motion_in = 0;
+						end
 					end
 					else begin
 						Enemy_Y_Motion_in = 1'b1;
 						Enemy_X_Motion_in = 0;
 					end
-				end
-				else begin
-					Enemy_Y_Motion_in = 1'b1;
-					Enemy_X_Motion_in = 0;
-				end
+			  end
+		  
 		  end
- 
+		  
+		  
+		  Enemy_X_Pos_in = Enemy_X + Enemy_X_Motion;
+		  Enemy_Y_Pos_in = Enemy_Y + Enemy_Y_Motion;
+		  
+		  if(!active)
+			begin
+					Enemy_X_Pos_in = 700;
+					Enemy_Y_Pos_in = 700;
+			end
+		  
+/*Enemy Types:
+1 = Keese (Bat)
+2 = ReDead (Zombie)
+3 = Slider
+*/		  
+		  
+		  if(initialize) begin
+			  if(room == 0) begin
+					active_next = 0;
+					Enemy_X_Pos_in = 700;
+					Enemy_Y_Pos_in = 700;
+					Type_next = 0;
+				end
+				
+				//Room 1 Enemy locations and types
+				else if(room == 1) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 300;
+						Enemy_Y_Pos_in = 200;
+						Type_next = 1;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 70;
+						Enemy_Y_Pos_in = 330;
+						Type_next = 1;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 100;
+						Enemy_Y_Pos_in = 330;
+						Type_next = 1;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 150;
+						Enemy_Y_Pos_in = 330;
+						Type_next = 1;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 200;
+						Enemy_Y_Pos_in = 330;
+						Type_next = 1;
+					end
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 0;
+						Enemy_Y_Pos_in = 0;
+						Type_next = 0;
+					end
+				end
+					
+				else if(room == 2) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 160;
+						Enemy_Y_Pos_in = 160;
+						Type_next = 1;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 480;
+						Enemy_Y_Pos_in = 160;
+						Type_next = 1;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 320;
+						Enemy_Y_Pos_in = 224;
+						Type_next = 1;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 224;
+						Enemy_Y_Pos_in = 352;
+						Type_next = 2;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 352;
+						Type_next = 2;
+					end
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 0;
+						Enemy_Y_Pos_in = 0;
+						Type_next = 0;
+					end
+				end
+					
+				else if(room == 3) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 128;
+						Enemy_Y_Pos_in = 96;
+						Type_next = 1;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 544;
+						Enemy_Y_Pos_in = 64;
+						Type_next = 1;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 160;
+						Enemy_Y_Pos_in = 256;
+						Type_next = 1;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 544;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 1;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 96;
+						Enemy_Y_Pos_in = 416;
+						Type_next = 1;
+					end
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 0;
+						Enemy_Y_Pos_in = 0;
+						Type_next = 0;
+					end
+				end
+					
+				else if(room == 4) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 224;
+						Enemy_Y_Pos_in = 160;
+						Type_next = 1;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 160;
+						Enemy_Y_Pos_in = 352;
+						Type_next = 2;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 32;
+						Enemy_Y_Pos_in = 416;
+						Type_next = 3;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 480;
+						Enemy_Y_Pos_in = 128;
+						Type_next = 2;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 576;
+						Enemy_Y_Pos_in = 416;
+						Type_next = 1;
+					end
+					
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 0;
+						Enemy_Y_Pos_in = 0;
+						Type_next = 0;
+					end
+				end
+				
+				else if(room == 5) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 192;
+						Enemy_Y_Pos_in = 192;
+						Type_next = 3;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 192;
+						Type_next = 3;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 544;
+						Enemy_Y_Pos_in = 224;
+						Type_next = 2;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 192;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 3;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 1;
+					end
+					
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 0;
+						Enemy_Y_Pos_in = 0;
+						Type_next = 0;
+					end
+				end
+				
+				else if(room == 6) begin
+					if(number == 1) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 192;
+						Enemy_Y_Pos_in = 128;
+						Type_next = 2;
+					end
+					
+					else if(number == 2) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 416;
+						Enemy_Y_Pos_in = 128;
+						Type_next = 2;
+					end
+					
+					else if(number == 3) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 288;
+						Enemy_Y_Pos_in = 256;
+						Type_next = 1;
+					end
+					
+					else if(number == 4) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 64;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 2;
+					end
+					
+					else if(number == 5) begin
+						active_next = 1;
+						Enemy_X_Pos_in = 544;
+						Enemy_Y_Pos_in = 288;
+						Type_next = 2;
+					end
+					
+					else begin
+						active_next = 0;
+						Enemy_X_Pos_in = 0;
+						Enemy_Y_Pos_in = 0;
+						Type_next = 0;
+					end
+				end
+				
+				else begin
+					active_next = 0;
+					Enemy_X_Pos_in = 0;
+					Enemy_Y_Pos_in = 0;
+					Type_next = 0;
+				end
+			end
+			
+			
     end	
 	
 	

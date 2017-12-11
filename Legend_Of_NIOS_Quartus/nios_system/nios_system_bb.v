@@ -1,6 +1,13 @@
 
 module nios_system (
 	clk_clk,
+	entity_active_export,
+	entity_dir_export,
+	entity_read_export,
+	entity_select_export,
+	entity_write_export,
+	entity_x_export,
+	entity_y_export,
 	keycode_export,
 	otg_hpi_address_export,
 	otg_hpi_cs_export,
@@ -19,15 +26,16 @@ module nios_system (
 	sdram_wire_dqm,
 	sdram_wire_ras_n,
 	sdram_wire_we_n,
-	entity_select_export,
-	entity_read_export,
-	entity_write_export,
-	entity_dir_export,
-	entity_x_export,
-	entity_y_export,
-	entity_active_export);	
+	entity_type_export);	
 
 	input		clk_clk;
+	input		entity_active_export;
+	output	[2:0]	entity_dir_export;
+	output		entity_read_export;
+	output	[2:0]	entity_select_export;
+	output		entity_write_export;
+	input	[9:0]	entity_x_export;
+	input	[9:0]	entity_y_export;
 	output	[15:0]	keycode_export;
 	output	[1:0]	otg_hpi_address_export;
 	output		otg_hpi_cs_export;
@@ -46,11 +54,5 @@ module nios_system (
 	output	[3:0]	sdram_wire_dqm;
 	output		sdram_wire_ras_n;
 	output		sdram_wire_we_n;
-	output	[2:0]	entity_select_export;
-	output		entity_read_export;
-	output		entity_write_export;
-	output	[1:0]	entity_dir_export;
-	input	[9:0]	entity_x_export;
-	input	[9:0]	entity_y_export;
-	input		entity_active_export;
+	input	[1:0]	entity_type_export;
 endmodule

@@ -2,11 +2,12 @@ module Player(input logic Reset, frame_clk, Clk,
 				  input logic [7:0] keycode,
 				  input logic [2:0] room,
 				  output logic[9:0] Player_X, Player_Y,
-				  output logic[2:0] doorcode);
+				  output logic[2:0] doorcode,
+				  output logic attack);
 
 	
-    parameter [9:0] Player_X_Center=320;  // Center position on the X axis
-    parameter [9:0] Player_Y_Center=240;  // Center position on the Y axis
+    parameter [9:0] Player_X_Center=336;  // Center position on the X axis
+    parameter [9:0] Player_Y_Center=400;  // Center position on the Y axis
     parameter [9:0] Player_X_Min=0;       // Leftmost point on the X axis
     parameter [9:0] Player_X_Max=639;     // Rightmost point on the X axis
     parameter [9:0] Player_Y_Min=0;       // Topmost point on the Y axis
@@ -21,6 +22,7 @@ module Player(input logic Reset, frame_clk, Clk,
 	 //level data is used for collision detection.
 	 logic [9:0] test_x, test_y;
 	 logic is_wall, wall_flag;
+	 logic attack_next;
 	 level_rom leveldata(.DrawX(test_x), .DrawY(test_y), .room, .bg_type(is_wall));
 	 
 	 logic[2:0] doorcode_in;
@@ -33,7 +35,7 @@ module Player(input logic Reset, frame_clk, Clk,
 	 
 	 initial
 	 begin
-		Player_X = 304;
+		Player_X = 336;
 		Player_Y = 400;
 	 end
 	 
@@ -60,6 +62,7 @@ module Player(input logic Reset, frame_clk, Clk,
             Player_Y_Motion <= Player_Y_Motion_in;
 				
 				doorcode <= doorcode_in;
+				attack <= attack_next;
         end
         // By defualt, keep the register values.
     end
@@ -69,6 +72,7 @@ module Player(input logic Reset, frame_clk, Clk,
     begin
 		  //Default: No door has been entered
 		  doorcode_in = 0;
+		  attack_next = 0;
 		  
         // Update the ball's position with its motion
         Player_X_Pos_in = Player_X + Player_X_Motion;
@@ -178,6 +182,9 @@ module Player(input logic Reset, frame_clk, Clk,
 					Player_X_Motion_in = 0;
 				end
 		  end
+		  
+		  else if(keycode == 44)
+				attack_next = 1;
  
 		  
 		  //Wraparound logic

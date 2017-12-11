@@ -6,9 +6,10 @@
 module nios_system (
 		input  wire        clk_clk,                //             clk.clk
 		input  wire        entity_active_export,   //   entity_active.export
-		output wire [1:0]  entity_dir_export,      //      entity_dir.export
+		output wire [2:0]  entity_dir_export,      //      entity_dir.export
 		output wire        entity_read_export,     //     entity_read.export
 		output wire [2:0]  entity_select_export,   //   entity_select.export
+		input  wire [1:0]  entity_type_export,     //     entity_type.export
 		output wire        entity_write_export,    //    entity_write.export
 		input  wire [9:0]  entity_x_export,        //        entity_x.export
 		input  wire [9:0]  entity_y_export,        //        entity_y.export
@@ -139,9 +140,11 @@ module nios_system (
 	wire   [1:0] mm_interconnect_0_entity_y_s1_address;                       // mm_interconnect_0:entity_y_s1_address -> entity_y:address
 	wire  [31:0] mm_interconnect_0_entity_active_s1_readdata;                 // entity_active:readdata -> mm_interconnect_0:entity_active_s1_readdata
 	wire   [1:0] mm_interconnect_0_entity_active_s1_address;                  // mm_interconnect_0:entity_active_s1_address -> entity_active:address
+	wire  [31:0] mm_interconnect_0_entity_type_s1_readdata;                   // entity_type:readdata -> mm_interconnect_0:entity_type_s1_readdata
+	wire   [1:0] mm_interconnect_0_entity_type_s1_address;                    // mm_interconnect_0:entity_type_s1_address -> entity_type:address
 	wire         irq_mapper_receiver0_irq;                                    // jtag_uart_0:av_irq -> irq_mapper:receiver0_irq
 	wire  [31:0] nios2_qsys_0_irq_irq;                                        // irq_mapper:sender_irq -> nios2_qsys_0:irq
-	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [entity_active:reset_n, entity_dir:reset_n, entity_read:reset_n, entity_select:reset_n, entity_write:reset_n, entity_x:reset_n, entity_y:reset_n, keycode:reset_n, mm_interconnect_0:keycode_reset_reset_bridge_in_reset_reset, otg_hpi_address:reset_n, otg_hpi_cs:reset_n, otg_hpi_data:reset_n, otg_hpi_r:reset_n, otg_hpi_w:reset_n]
+	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [entity_active:reset_n, entity_dir:reset_n, entity_read:reset_n, entity_select:reset_n, entity_type:reset_n, entity_write:reset_n, entity_x:reset_n, entity_y:reset_n, keycode:reset_n, mm_interconnect_0:keycode_reset_reset_bridge_in_reset_reset, otg_hpi_address:reset_n, otg_hpi_cs:reset_n, otg_hpi_data:reset_n, otg_hpi_r:reset_n, otg_hpi_w:reset_n]
 	wire         nios2_qsys_0_debug_reset_request_reset;                      // nios2_qsys_0:debug_reset_request -> rst_controller:reset_in1
 	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [irq_mapper:reset, jtag_uart_0:rst_n, mm_interconnect_0:nios2_qsys_0_reset_reset_bridge_in_reset_reset, nios2_qsys_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, sysid_qsys_0:reset_n]
 	wire         rst_controller_001_reset_out_reset_req;                      // rst_controller_001:reset_req -> [nios2_qsys_0:reset_req, onchip_memory2_0:reset_req, rst_translator:reset_req_in]
@@ -177,7 +180,7 @@ module nios_system (
 		.out_port   (entity_read_export)                           // external_connection.export
 	);
 
-	nios_system_entity_select entity_select (
+	nios_system_entity_dir entity_select (
 		.clk        (clk_clk),                                       //                 clk.clk
 		.reset_n    (~rst_controller_reset_out_reset),               //               reset.reset_n
 		.address    (mm_interconnect_0_entity_select_s1_address),    //                  s1.address
@@ -186,6 +189,14 @@ module nios_system (
 		.chipselect (mm_interconnect_0_entity_select_s1_chipselect), //                    .chipselect
 		.readdata   (mm_interconnect_0_entity_select_s1_readdata),   //                    .readdata
 		.out_port   (entity_select_export)                           // external_connection.export
+	);
+
+	nios_system_entity_type entity_type (
+		.clk      (clk_clk),                                   //                 clk.clk
+		.reset_n  (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address  (mm_interconnect_0_entity_type_s1_address),  //                  s1.address
+		.readdata (mm_interconnect_0_entity_type_s1_readdata), //                    .readdata
+		.in_port  (entity_type_export)                         // external_connection.export
 	);
 
 	nios_system_entity_read entity_write (
@@ -281,7 +292,7 @@ module nios_system (
 		.reset_req  (rst_controller_001_reset_out_reset_req)            //       .reset_req
 	);
 
-	nios_system_entity_dir otg_hpi_address (
+	nios_system_otg_hpi_address otg_hpi_address (
 		.clk        (clk_clk),                                         //                 clk.clk
 		.reset_n    (~rst_controller_reset_out_reset),                 //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_address_s1_address),    //                  s1.address
@@ -417,6 +428,8 @@ module nios_system (
 		.entity_select_s1_readdata                      (mm_interconnect_0_entity_select_s1_readdata),                 //                                         .readdata
 		.entity_select_s1_writedata                     (mm_interconnect_0_entity_select_s1_writedata),                //                                         .writedata
 		.entity_select_s1_chipselect                    (mm_interconnect_0_entity_select_s1_chipselect),               //                                         .chipselect
+		.entity_type_s1_address                         (mm_interconnect_0_entity_type_s1_address),                    //                           entity_type_s1.address
+		.entity_type_s1_readdata                        (mm_interconnect_0_entity_type_s1_readdata),                   //                                         .readdata
 		.entity_write_s1_address                        (mm_interconnect_0_entity_write_s1_address),                   //                          entity_write_s1.address
 		.entity_write_s1_write                          (mm_interconnect_0_entity_write_s1_write),                     //                                         .write
 		.entity_write_s1_readdata                       (mm_interconnect_0_entity_write_s1_readdata),                  //                                         .readdata
