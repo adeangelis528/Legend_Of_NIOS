@@ -1,4 +1,4 @@
-18:45:36 **** Incremental Build of configuration Nios II for project usb_kb ****
+23:02:08 **** Incremental Build of configuration Nios II for project usb_kb ****
 make all 
 Info: Building ../usb_kb_bsp/
 C:/altera/15.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../usb_kb_bsp/
@@ -17,5 +17,5 @@ To generate from the command line:
 make[1]: *** [makefile] Error 1
 make: *** [../usb_kb_bsp/-recurs-make-lib] Error 2
 
-18:45:37 Build Finished (took 1s.485ms)
+23:02:09 Build Finished (took 1s.414ms)
 
