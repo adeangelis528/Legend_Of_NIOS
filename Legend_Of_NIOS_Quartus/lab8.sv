@@ -1,15 +1,11 @@
 //-------------------------------------------------------------------------
-//      lab8.sv                                                          --
-//      Christine Chen                                                   --
-//      Fall 2014                                                        --
+//      Legend of NIOS                                                   --
+//      Andrew DeAngelis, Michael Recklein                               --
+//      Fall 2017                                                        --
 //                                                                       --
-//      Modified by Po-Han Huang                                         --
-//      10/06/2017                                                       --
+//      Built on Lab 8 USB interface                                     --
 //                                                                       --
-//      Fall 2017 Distribution                                           --
 //                                                                       --
-//      For use with ECE 385 Lab 8                                       --
-//      UIUC ECE Department                                              --
 //-------------------------------------------------------------------------
 
 
@@ -222,6 +218,8 @@ module lab8( input               CLOCK_50,
 										  .Enemy3_X, .Enemy3_Y,
 										  .Enemy4_X, .Enemy4_Y,
 										  .Enemy5_X, .Enemy5_Y,
+										  .E1_Type(Type_E1), .E2_Type(Type_E2), .E3_Type(Type_E3), .E4_Type(Type_E4), .E5_Type(Type_E5),
+										  .frame_clk(VGA_VS), .player_attack,
 										  .bg_r, .bg_g, .bg_b,
 										  .font_addr, .text_offset, .draw_text,
 										  .VGA_R,
